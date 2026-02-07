@@ -20,17 +20,17 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 hover:border-primary/50 transition-colors cursor-default backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 border border-black/10 mb-8 hover:border-primary/50 transition-colors cursor-default backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm text-gray-300 font-medium tracking-wide font-sans">0xVRA Mainnet Live</span>
+            <span className="text-sm text-gray-700 font-medium tracking-wide font-sans">0xVRA Mainnet Live</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 mb-6 tracking-tight leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-500 mb-6 tracking-tight leading-[1.1]">
             Trustless AI,<br />
-            <span className="text-white">Cryptographically Verified.</span>
+            <span className="text-black">Cryptographically Verified.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
             The accountability layer for autonomous agents. We provide <span className="text-primary font-medium">zk-SNARK</span> proofs for every AI inference, ensuring agents act exactly as programmed.
           </p>
 
@@ -39,7 +39,7 @@ export default function Hero() {
               Deploy Agent
               <Activity className="w-5 h-5" />
             </a>
-            <a href="#verify" className="px-8 py-4 bg-white/5 text-white border border-white/10 rounded-xl font-bold text-lg hover:bg-white/10 transition-all hover:border-white/20 active:scale-95 flex items-center gap-2">
+            <a href="#verify" className="px-8 py-4 bg-white text-black border border-gray-200 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all hover:border-black/20 active:scale-95 flex items-center gap-2 shadow-lg shadow-gray-200/50">
               Verify Proof
               <FileCode className="w-5 h-5 text-secondary" />
             </a>

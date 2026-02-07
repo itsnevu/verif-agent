@@ -149,21 +149,21 @@ export default function VeriAgentApp() {
 
 
     return (
-        <section id="registry" className="py-24 bg-gray-900 min-h-screen scroll-mt-20">
+        <section id="registry" className="py-24 bg-white min-h-screen scroll-mt-20">
             <div id="verify" className="max-w-7xl mx-auto px-6">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
                     <div>
-                        <h2 className="text-4xl font-bold text-white mb-2">0xVRA <span className="text-secondary font-light">Explorer</span></h2>
-                        <p className="text-gray-400">Explore registered agents, verify proofs, and monitor network status.</p>
+                        <h2 className="text-4xl font-bold text-black mb-2">0xVRA <span className="text-gray-500 font-light">Explorer</span></h2>
+                        <p className="text-gray-600">Explore registered agents, verify proofs, and monitor network status.</p>
                     </div>
 
-                    <div className="flex p-1 bg-gray-800 rounded-xl border border-white/10">
+                    <div className="flex p-1 bg-gray-100 rounded-xl border border-gray-200">
                         {['registry', 'simulate', 'node'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab as any)}
-                                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all capitalize ${activeTab === tab ? 'bg-primary text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all capitalize ${activeTab === tab ? 'bg-black text-white shadow-lg' : 'text-gray-500 hover:text-black'}`}
                             >
                                 {tab === 'registry' ? 'Agent Registry' : tab === 'simulate' ? 'Task Simulator' : 'Node Status'}
                             </button>
@@ -171,7 +171,7 @@ export default function VeriAgentApp() {
                     </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-2xl border border-white/5 overflow-hidden min-h-[700px] shadow-2xl relative">
+                <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden min-h-[700px] shadow-2xl relative">
                     <AnimatePresence mode="wait">
                         {/* --- REGISTRY TAB --- */}
                         {activeTab === 'registry' && (
@@ -184,14 +184,14 @@ export default function VeriAgentApp() {
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             placeholder="Search agents by ID, type, or name..."
-                                            className="w-full bg-gray-900/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all"
+                                            className="w-full bg-white border border-gray-200 rounded-xl py-3 pl-12 pr-4 text-black placeholder-gray-400 focus:outline-none focus:border-black/50 focus:ring-1 focus:ring-black/5 transition-all"
                                         />
                                     </div>
                                     <div className="flex gap-3">
                                         <select
                                             value={filterStatus}
                                             onChange={(e) => setFilterStatus(e.target.value)}
-                                            className="bg-gray-900 border border-white/10 rounded-xl px-4 py-3 text-gray-300 text-sm focus:outline-none focus:border-primary/50"
+                                            className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-black/50"
                                         >
                                             <option>All Statuses</option>
                                             <option>Verified</option>
@@ -201,7 +201,7 @@ export default function VeriAgentApp() {
                                         <select
                                             value={sortBy}
                                             onChange={(e) => setSortBy(e.target.value)}
-                                            className="bg-gray-900 border border-white/10 rounded-xl px-4 py-3 text-gray-300 text-sm focus:outline-none focus:border-primary/50"
+                                            className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-black/50"
                                         >
                                             <option>Reputation</option>
                                             <option>Stake</option>
@@ -215,17 +215,17 @@ export default function VeriAgentApp() {
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             key={agent.id}
-                                            className="p-5 bg-gray-900 rounded-xl border border-white/5 hover:border-primary/30 transition-all group cursor-pointer hover:shadow-lg hover:shadow-primary/5 flex flex-col justify-between"
+                                            className="p-5 bg-white rounded-xl border border-gray-200 hover:border-black/30 transition-all group cursor-pointer hover:shadow-lg flex flex-col justify-between"
                                         >
                                             <div className="flex justify-between items-start mb-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-black to-gray-700 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                                                         {agent.name.charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors truncate max-w-[120px]">{agent.name}</h4>
-                                                        <div className="flex items-center gap-2 text-[10px] text-gray-400 mt-1">
-                                                            <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded">{agent.id}</span>
+                                                        <h4 className="text-sm font-bold text-black group-hover:text-gray-700 transition-colors truncate max-w-[120px]">{agent.name}</h4>
+                                                        <div className="flex items-center gap-2 text-[10px] text-gray-500 mt-1">
+                                                            <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded">{agent.id}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -237,15 +237,15 @@ export default function VeriAgentApp() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center gap-2 text-xs text-gray-400 mb-4 bg-black/20 p-2 rounded-lg">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+                                            <div className="flex items-center gap-2 text-xs text-black mb-4 bg-gray-100 p-2 rounded-lg">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-black" />
                                                 {agent.type}
                                             </div>
 
-                                            <div className="grid grid-cols-3 gap-2 border-t border-white/5 pt-3">
-                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Reputation</div><div className="text-white font-mono font-bold text-sm">{agent.reputation}</div></div>
-                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Staked</div><div className="text-white font-mono font-bold text-sm">{agent.stake}</div></div>
-                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Uptime</div><div className="text-green-400 font-mono font-bold text-sm">{agent.uptime}</div></div>
+                                            <div className="grid grid-cols-3 gap-2 border-t border-gray-100 pt-3">
+                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Reputation</div><div className="text-black font-mono font-bold text-sm">{agent.reputation}</div></div>
+                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Staked</div><div className="text-black font-mono font-bold text-sm">{agent.stake}</div></div>
+                                                <div><div className="text-gray-500 text-[10px] mb-0.5">Uptime</div><div className="text-green-600 font-mono font-bold text-sm">{agent.uptime}</div></div>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -260,7 +260,7 @@ export default function VeriAgentApp() {
                                     <div className="mt-6 text-center">
                                         <button
                                             onClick={() => setVisibleAgents(prev => prev + 12)}
-                                            className="px-6 py-2 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg text-sm transition-colors"
+                                            className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-black rounded-lg text-sm transition-colors"
                                         >
                                             Load More Agents
                                         </button>
@@ -273,24 +273,24 @@ export default function VeriAgentApp() {
                         {activeTab === 'simulate' && (
                             <motion.div key="simulate" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col h-full">
                                 <div className="flex-1 grid md:grid-cols-2 h-full">
-                                    <div className="p-8 border-b md:border-b-0 md:border-r border-white/5 flex flex-col bg-gray-800/50">
-                                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                            <Play className="w-5 h-5 text-secondary" /> Task Simulator
+                                    <div className="p-8 border-b md:border-b-0 md:border-r border-gray-200 flex flex-col bg-white">
+                                        <h3 className="text-xl font-bold text-black mb-6 flex items-center gap-2">
+                                            <Play className="w-5 h-5 text-black" /> Task Simulator
                                         </h3>
 
                                         <div className="space-y-6 flex-1">
                                             <div>
-                                                <label className="block text-sm text-gray-400 mb-2">Select Agent</label>
-                                                <select className="w-full bg-gray-900 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-secondary transition-colors">
+                                                <label className="block text-sm text-gray-600 mb-2">Select Agent</label>
+                                                <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-black focus:outline-none focus:border-black transition-colors shadow-sm">
                                                     {INITIAL_AGENTS.slice(0, 5).map(a => <option key={a.id}>{a.name} ({a.id})</option>)}
                                                 </select>
                                             </div>
                                             <div className="flex-1">
-                                                <label className="block text-sm text-gray-400 mb-2">Input Prompt / Task</label>
+                                                <label className="block text-sm text-gray-600 mb-2">Input Prompt / Task</label>
                                                 <textarea
                                                     value={prompt}
                                                     onChange={(e) => setPrompt(e.target.value)}
-                                                    className="w-full h-40 bg-gray-900 border border-white/10 rounded-lg p-4 text-gray-300 focus:outline-none focus:border-secondary resize-none font-mono text-sm leading-relaxed"
+                                                    className="w-full h-40 bg-white border border-gray-200 rounded-lg p-4 text-black focus:outline-none focus:border-black resize-none font-mono text-sm leading-relaxed shadow-sm"
                                                 />
                                             </div>
                                         </div>
@@ -298,35 +298,35 @@ export default function VeriAgentApp() {
                                         <button
                                             onClick={runSimulation}
                                             disabled={simulationStep === 'running'}
-                                            className={`w-full py-4 rounded-xl font-bold text-white transition-all flex items-center justify-center gap-2 mt-8 ${simulationStep === 'running' ? 'bg-gray-700 cursor-not-allowed opacity-50' : 'bg-secondary hover:bg-secondary/90 hover:shadow-lg hover:shadow-secondary/20'}`}
+                                            className={`w-full py-4 rounded-xl font-bold text-white transition-all flex items-center justify-center gap-2 mt-8 ${simulationStep === 'running' ? 'bg-gray-400 cursor-not-allowed opacity-50' : 'bg-black hover:bg-gray-800 hover:shadow-lg'}`}
                                         >
                                             {simulationStep === 'running' ? <><RefreshCw className="w-4 h-4 animate-spin" /> PROCESSING...</> : <><Play className="w-4 h-4 fill-current" /> RUN SIMULATION</>}
                                         </button>
                                     </div>
 
-                                    <div className="p-8 bg-black relative overflow-hidden flex flex-col">
-                                        <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
-                                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2 relative z-10">
-                                            <Terminal className="w-5 h-5 text-primary" /> Live Reasoning Trace
+                                    <div className="p-8 bg-gray-50 relative overflow-hidden flex flex-col">
+                                        <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
+                                        <h3 className="text-xl font-bold text-black mb-4 flex items-center gap-2 relative z-10">
+                                            <Terminal className="w-5 h-5 text-black" /> Live Reasoning Trace
                                         </h3>
 
                                         <div
                                             ref={simLogContainerRef}
-                                            className="flex-1 bg-gray-900/50 rounded-xl border border-white/10 p-4 font-mono text-xs overflow-y-auto custom-scrollbar relative z-10"
+                                            className="flex-1 bg-white rounded-xl border border-gray-200 p-4 font-mono text-xs overflow-y-auto custom-scrollbar relative z-10 shadow-inner"
                                         >
                                             {simLogs.length === 0 && simulationStep === 'idle' && (
-                                                <div className="h-full flex items-center justify-center text-gray-600">
+                                                <div className="h-full flex items-center justify-center text-gray-400">
                                                     Waiting for task input...
                                                 </div>
                                             )}
                                             {simLogs.map((log, i) => (
-                                                <div key={i} className="mb-2 text-green-400">
-                                                    <span className="text-gray-600 mr-2">[{new Date().toLocaleTimeString()}]</span>
-                                                    {log.startsWith('>') ? <span className="text-secondary font-bold">{log}</span> : log}
+                                                <div key={i} className="mb-2 text-gray-700">
+                                                    <span className="text-gray-400 mr-2">[{new Date().toLocaleTimeString()}]</span>
+                                                    {log.startsWith('>') ? <span className="text-black font-bold">{log}</span> : log}
                                                 </div>
                                             ))}
                                             {simulationStep === 'running' && (
-                                                <div className="animate-pulse text-primary">_</div>
+                                                <div className="animate-pulse text-black">_</div>
                                             )}
                                         </div>
 
@@ -351,37 +351,38 @@ export default function VeriAgentApp() {
 
                         {/* --- NODE TAB --- */}
                         {activeTab === 'node' && (
-                            <motion.div key="node" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="p-8 h-full bg-gray-900 flex flex-col">
+                            <motion.div key="node" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="p-8 h-full bg-white flex flex-col">
                                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                                     {/* Stats Cards */}
-                                    <div className="bg-gray-800 p-6 rounded-xl border border-white/5 relative overflow-hidden group">
-                                        <div className="absolute right-0 top-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Activity className="w-16 h-16 text-primary" /></div>
-                                        <div className="text-gray-400 text-sm mb-1">Node Status</div>
-                                        <div className="text-2xl font-bold text-green-500 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Operational</div>
-                                        <div className="mt-4 text-xs text-gray-500">Uptime: 14d 21h 12m</div>
+                                    {/* Stats Cards */}
+                                    <div className="bg-white p-6 rounded-xl border border-gray-200 relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
+                                        <div className="absolute right-0 top-0 p-4 opacity-5 group-hover:scale-110 transition-transform"><Activity className="w-16 h-16 text-black" /></div>
+                                        <div className="text-gray-500 text-sm mb-1">Node Status</div>
+                                        <div className="text-2xl font-bold text-green-600 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Operational</div>
+                                        <div className="mt-4 text-xs text-gray-400">Uptime: 14d 21h 12m</div>
                                     </div>
-                                    <div className="bg-gray-800 p-6 rounded-xl border border-white/5 relative overflow-hidden group">
-                                        <div className="absolute right-0 top-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Database className="w-16 h-16 text-secondary" /></div>
-                                        <div className="text-gray-400 text-sm mb-1">Total Proofs Verified</div>
-                                        <div className="text-2xl font-bold text-white tabular-nums">{totalProofs.toLocaleString()}</div>
-                                        <div className="mt-4 text-xs text-green-400 flex items-center gap-1"><Activity className="w-3 h-3" /> +12% activity</div>
+                                    <div className="bg-white p-6 rounded-xl border border-gray-200 relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
+                                        <div className="absolute right-0 top-0 p-4 opacity-5 group-hover:scale-110 transition-transform"><Database className="w-16 h-16 text-black" /></div>
+                                        <div className="text-gray-500 text-sm mb-1">Total Proofs Verified</div>
+                                        <div className="text-2xl font-bold text-black tabular-nums">{totalProofs.toLocaleString()}</div>
+                                        <div className="mt-4 text-xs text-green-600 flex items-center gap-1"><Activity className="w-3 h-3" /> +12% activity</div>
                                     </div>
-                                    <div className="bg-gray-800 p-6 rounded-xl border border-white/5 relative overflow-hidden group">
-                                        <div className="absolute right-0 top-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Shield className="w-16 h-16 text-white" /></div>
-                                        <div className="text-gray-400 text-sm mb-1">Slash Events</div>
-                                        <div className="text-2xl font-bold text-white">0</div>
-                                        <div className="mt-4 text-xs text-gray-500">Network secure</div>
+                                    <div className="bg-white p-6 rounded-xl border border-gray-200 relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
+                                        <div className="absolute right-0 top-0 p-4 opacity-5 group-hover:scale-110 transition-transform"><Shield className="w-16 h-16 text-black" /></div>
+                                        <div className="text-gray-500 text-sm mb-1">Slash Events</div>
+                                        <div className="text-2xl font-bold text-black">0</div>
+                                        <div className="mt-4 text-xs text-gray-400">Network secure</div>
                                     </div>
                                 </div>
 
-                                <div className="bg-black/50 rounded-xl border border-white/10 flex-1 overflow-hidden flex flex-col">
-                                    <div className="p-4 border-b border-white/10 bg-gray-900/50 flex justify-between items-center">
-                                        <span className="font-mono text-sm text-gray-400 flex items-center gap-2"><Terminal className="w-4 h-4" /> Node Logs</span>
-                                        <span className="text-[10px] text-primary flex items-center gap-1 bg-primary/10 px-2 py-1 rounded"><div className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" /> LIVE FEED</span>
+                                <div className="bg-gray-50 rounded-xl border border-gray-200 flex-1 overflow-hidden flex flex-col shadow-inner">
+                                    <div className="p-4 border-b border-gray-200 bg-white flex justify-between items-center">
+                                        <span className="font-mono text-sm text-gray-600 flex items-center gap-2"><Terminal className="w-4 h-4" /> Node Logs</span>
+                                        <span className="text-[10px] text-green-600 flex items-center gap-1 bg-green-100 px-2 py-1 rounded"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" /> LIVE FEED</span>
                                     </div>
                                     <div ref={nodeLogContainerRef} className="flex-1 p-4 font-mono text-xs overflow-y-auto custom-scrollbar space-y-1.5">
                                         {nodeLogs.map((log, i) => (
-                                            <div key={i} className={`flex gap-3 ${log.includes('Verified') ? 'text-green-400' : log.includes('Slash') ? 'text-red-400' : 'text-gray-400'}`}>
+                                            <div key={i} className={`flex gap-3 ${log.includes('Verified') ? 'text-green-600' : log.includes('Slash') ? 'text-red-500' : 'text-gray-500'}`}>
                                                 <span className="opacity-50 flex-shrink-0">{log.split(']')[0]}]</span>
                                                 <span>{log.split(']')[1]}</span>
                                             </div>

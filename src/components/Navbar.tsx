@@ -26,7 +26,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? 'bg-gray-900/80 backdrop-blur-md border-b border-white/10'
+        ? 'bg-white/80 backdrop-blur-md border-b border-black/5 shadow-sm'
         : 'bg-transparent'
         }`}
     >
@@ -46,23 +46,23 @@ export default function Navbar() {
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">0xVRA</h1>
+              <h1 className="text-xl font-bold text-black">0xVRA</h1>
               <p className="text-xs text-secondary">Proof-of-Reasoning Layer</p>
             </div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="/#features" className="text-sm text-gray-300 hover:text-white transition-colors">
+            <a href="/#features" className="text-sm text-gray-600 hover:text-black transition-colors">
               Features
             </a>
-            <a href="/#registry" className="text-sm text-gray-300 hover:text-white transition-colors">
+            <a href="/#registry" className="text-sm text-gray-600 hover:text-black transition-colors">
               Agent Registry
             </a>
-            <a href="/#verify" className="text-sm text-gray-300 hover:text-white transition-colors">
+            <a href="/#verify" className="text-sm text-gray-600 hover:text-black transition-colors">
               Verify
             </a>
-            <a href="/docs" className="text-sm text-gray-300 hover:text-white transition-colors">
+            <a href="/docs" className="text-sm text-gray-600 hover:text-black transition-colors">
               Docs
             </a>
 
@@ -120,7 +120,7 @@ export default function Navbar() {
                         <div className="flex items-center gap-3">
                           <button
                             onClick={openChainModal}
-                            className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-sm font-semibold text-gray-200 transition-colors"
+                            className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-semibold text-gray-700 transition-colors"
                           >
                             {chain.hasIcon && (
                               <div style={{ background: chain.iconBackground, width: 20, height: 20, borderRadius: 999, overflow: 'hidden', marginRight: 4 }}>
@@ -138,7 +138,7 @@ export default function Navbar() {
 
                           <button
                             onClick={openAccountModal}
-                            className="px-4 py-2 bg-gray-800 border border-white/10 rounded-lg text-sm font-semibold text-white flex items-center gap-2 hover:bg-gray-700 hover:border-primary/30 transition-all"
+                            className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-900 flex items-center gap-2 hover:bg-gray-50 hover:border-black/30 transition-all shadow-sm"
                           >
                             {account.displayName}
                             {account.displayBalance
@@ -157,7 +157,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-white"
+            className="md:hidden p-2 text-black"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -169,7 +169,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden mt-4 py-4 px-4 space-y-3 bg-gray-900/95 backdrop-blur-md rounded-lg border border-white/10"
+            className="md:hidden mt-4 py-4 px-4 space-y-3 bg-white/95 backdrop-blur-md rounded-lg border border-black/5 shadow-xl"
           >
             <a href="/#features" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-300 hover:text-white transition-colors py-2">
               Features

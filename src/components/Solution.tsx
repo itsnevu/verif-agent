@@ -28,23 +28,23 @@ const steps = [
 
 export default function Solution() {
     return (
-        <section id="features" className="py-24 bg-background border-t border-white/5">
+        <section id="features" className="py-24 bg-white border-t border-black/5">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black text-sm font-medium mb-4">
                         The Solution
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                        Proof-of-Reasoning <span className="text-gray-500">(PoR)</span>
+                    <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
+                        Proof-of-Reasoning <span className="text-gray-400">(PoR)</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-gray-600 max-w-2xl mx-auto">
                         A trustless protocol that mandates verifying the "thought process" before the action.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-4 gap-6 relative">
                     {/* Connecting Line (Desktop) */}
-                    <div className="hidden md:block absolute top-[2.5rem] left-0 w-full h-0.5 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0" />
+                    <div className="hidden md:block absolute top-[2.5rem] left-0 w-full h-0.5 bg-gradient-to-r from-black/5 via-black/20 to-black/5" />
 
                     {steps.map((step, index) => (
                         <motion.div
@@ -55,11 +55,11 @@ export default function Solution() {
                             transition={{ delay: index * 0.15 }}
                             className="relative relative z-10"
                         >
-                            <div className="w-20 h-20 mx-auto bg-gray-800 border border-primary/30 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-[0_0_30px_-10px_rgba(160,58,19,0.3)]">
+                            <div className="w-20 h-20 mx-auto bg-white border border-black/10 rounded-2xl flex items-center justify-center text-black mb-6 shadow-xl shadow-gray-200">
                                 {step.icon}
                             </div>
-                            <h3 className="text-lg font-bold text-white mb-3 text-center">{step.title}</h3>
-                            <p className="text-gray-400 text-sm text-center leading-relaxed">
+                            <h3 className="text-lg font-bold text-black mb-3 text-center">{step.title}</h3>
+                            <p className="text-gray-600 text-sm text-center leading-relaxed">
                                 {step.description}
                             </p>
 
