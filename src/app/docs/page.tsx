@@ -95,10 +95,15 @@ export default function DocsPage() {
                         {/* Content: Introduction */}
                         {activeSection === 'introduction' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h1 className="text-3xl font-bold text-white mb-4">Introduction to VeriAgent</h1>
-                                <p className="text-lg text-gray-400 mb-6 leading-relaxed">
-                                    The world's first decentralized marketplace for autonomous trading agents.
-                                    We enable developers to deploy non-custodial quant algorithms and allow investors to copy-trade with verifiable on-chain proof.
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
+                                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                                    Documentation v1.0
+                                </div>
+                                <h1 className="text-3xl font-bold text-white mb-4">Introduction to 0xVRA</h1>
+                                <p className="text-gray-400 leading-relaxed text-lg mb-8">
+                                    0xVRA (Proof-of-Reasoning Layer) is the decentralized accountability protocol for autonomous AI agents.
+                                    By leveraging zk-SNARKs and optimistic verification, we ensure that every action taken by an agent is
+                                    cryptographically verifiable and adheres to its pre-defined policy.
                                 </p>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-8">
@@ -138,8 +143,8 @@ export default function DocsPage() {
                                         <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
                                     </div>
                                     <div className="leading-relaxed">
-                                        <span className="text-secondary">$</span> npm install -g @veriagent/cli<br />
-                                        <span className="text-secondary">$</span> veriagent login
+                                        <span className="text-secondary">$</span> npm install -g @0xvra/cli<br />
+                                        <span className="text-secondary">$</span> 0xvra login
                                     </div>
                                 </div>
 
@@ -148,7 +153,7 @@ export default function DocsPage() {
                                     Initialize Project
                                 </h3>
                                 <div className="bg-gray-900 border border-white/10 text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-xl overflow-x-auto">
-                                    <span className="text-secondary">$</span> veriagent init my-strategy --template mean-reversion
+                                    <span className="text-secondary">$</span> 0xvra init my-strategy --template mean-reversion
                                 </div>
 
                                 <div className="p-4 border-l-2 border-primary bg-primary/5 rounded-r-lg my-6 relative overflow-hidden">
@@ -167,7 +172,7 @@ export default function DocsPage() {
                                     Deploy to Mainnet
                                 </h3>
                                 <div className="bg-gray-900 border border-white/10 text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-xl overflow-x-auto">
-                                    <span className="text-secondary">$</span> veriagent deploy --network mainnet
+                                    <span className="text-secondary">$</span> 0xvra deploy --network mainnet
                                 </div>
                             </motion.div>
                         )}
@@ -270,7 +275,7 @@ export class MyStrategy extends Agent {
                                 <p className="text-gray-400 mb-6">Verify your strategy against historical data before mainnet deployment.</p>
 
                                 <div className="bg-gray-900 border border-white/10 p-4 rounded-xl font-mono text-sm mb-6">
-                                    <span className="text-secondary">$</span> veriagent backtest --strategy src/main.ts --days 30
+                                    <span className="text-secondary">$</span> 0xvra backtest --strategy src/main.ts --days 30
                                 </div>
                                 <p className="text-sm text-gray-400">
                                     The backtester runs your agent in a sandboxed environment, simulating market conditions and verifying that valid Proof-of-Reasoning traces are generated for every trade.

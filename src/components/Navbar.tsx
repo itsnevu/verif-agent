@@ -46,8 +46,8 @@ export default function Navbar() {
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">VeriAgent</h1>
-              <p className="text-xs text-secondary">Proof-of-Reasoning Protocol</p>
+              <h1 className="text-xl font-bold text-white">0xVRA</h1>
+              <p className="text-xs text-secondary">Proof-of-Reasoning Layer</p>
             </div>
           </Link>
 

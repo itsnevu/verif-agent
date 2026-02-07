@@ -1,17 +1,18 @@
 'use client';
 
 import { Shield, Bug, Search, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function SecurityPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* Header */}
-            <div className="pt-32 pb-16 px-6 text-center bg-gray-900 border-b border-white/5">
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Security & Bug Bounty</h1>
-                <p className="text-gray-400 max-w-2xl mx-auto">
-                    Security is our top priority. Help us secure the VeriAgent protocol and get rewarded.
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto mb-20">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Security Center</h1>
+                <p className="text-xl text-gray-400 leading-relaxed">
+                    Security is our top priority. Help us secure the 0xVRA protocol and get rewarded.
                 </p>
-            </div>
+            </motion.div>
 
             <div className="max-w-5xl mx-auto px-6 py-16 space-y-24">
 

@@ -1,23 +1,23 @@
 {
-  "name": "Claw Quants - Autonomous Trading Intelligence",
-  "short_name": "Claw Quants",
-  "description": "Advanced AI-powered quantitative trading platform where humans and AI collaborate for optimal trading performance",
+  "name": "0xVRA | Proof-of-Reasoning Layer",
+  "short_name": "0xVRA",
+  "description": "The accountability layer for autonomous AI agents. Verify reasoning execution with ZK-SNARKs.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#FF6363",
+  "background_color": "#171717",
+  "theme_color": "#171717",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
+      "src": "/icon.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "/brand-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]

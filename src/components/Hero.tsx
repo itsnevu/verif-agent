@@ -22,7 +22,7 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 hover:border-primary/50 transition-colors cursor-default backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm text-gray-300 font-medium tracking-wide font-sans">VeriAgent V1.0 Live on Mainnet</span>
+            <span className="text-sm text-gray-300 font-medium tracking-wide font-sans">0xVRA Mainnet Live</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 mb-6 tracking-tight leading-[1.1]">
@@ -52,7 +52,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none"
       >
         <span className="text-xs text-gray-500 uppercase tracking-widest">Scroll to Verify</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />

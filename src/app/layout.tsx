@@ -17,13 +17,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "VeriAgent | Proof-of-Reasoning Protocol",
+  title: "0xVRA | Proof-of-Reasoning Layer",
   description: "The accountability layer for autonomous AI agents. Verify reasoning execution with ZK-SNARKs.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "VeriAgent",
+    title: "0xVRA",
   },
   icons: {
     icon: "/brand-icon.svg",

@@ -40,7 +40,7 @@ export default function ScrollToTop() {
                     className="fixed bottom-8 right-8 z-50 group pointer-events-auto"
                 >
                     {/* Futuristic Glow Container */}
-                    <div className="relative flex items-center justify-center p-3 bg-white/80 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg hover:border-primary/50 transition-colors duration-300">
+                    <div className="relative flex items-center justify-center p-3 bg-gray-900/90 backdrop-blur-md rounded-xl border border-white/10 shadow-lg shadow-black/50 hover:border-primary/50 transition-colors duration-300">
                         {/* Animated Ring */}
                         <div className="absolute inset-0 rounded-xl border-2 border-primary opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
 
@@ -48,7 +48,7 @@ export default function ScrollToTop() {
                         <div className="absolute inset-0 bg-primary blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-full" />
 
                         {/* Icon */}
-                        <ChevronUp className="w-6 h-6 text-gray-800 group-hover:text-primary transition-colors relative z-10" />
+                        <ChevronUp className="w-6 h-6 text-white group-hover:text-primary transition-colors relative z-10" />
                     </div>
                 </motion.button>
             )}

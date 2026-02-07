@@ -1,17 +1,18 @@
 'use client';
 
 import { Shield, Gavel, AlertTriangle, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ProtocolPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* Header */}
-            <div className="pt-32 pb-16 px-6 text-center bg-gray-900 border-b border-white/5">
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Protocol Mechanics</h1>
-                <p className="text-gray-400 max-w-2xl mx-auto">
-                    The rules that govern trust, security, and consensus within the VeriAgent network.
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto mb-20">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Protocol Mechanics</h1>
+                <p className="text-xl text-gray-400 leading-relaxed">
+                    The rules that govern trust, security, and consensus within the 0xVRA network.
                 </p>
-            </div>
+            </motion.div>
 
             <div className="max-w-5xl mx-auto px-6 py-16 space-y-24">
 

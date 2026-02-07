@@ -154,8 +154,8 @@ export default function VeriAgentApp() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
                     <div>
-                        <h2 className="text-4xl font-bold text-white mb-2">VeriAgent <span className="text-secondary font-light">Scout</span></h2>
-                        <p className="text-gray-400">Explore registered agents, verify proofs, and monitor node status.</p>
+                        <h2 className="text-4xl font-bold text-white mb-2">0xVRA <span className="text-secondary font-light">Explorer</span></h2>
+                        <p className="text-gray-400">Explore registered agents, verify proofs, and monitor network status.</p>
                     </div>
 
                     <div className="flex p-1 bg-gray-800 rounded-xl border border-white/10">
@@ -230,8 +230,8 @@ export default function VeriAgentApp() {
                                                     </div>
                                                 </div>
                                                 <div className={`px-2 py-0.5 rounded text-[10px] font-bold border ${agent.status === 'Verified' ? 'bg-green-500/10 text-green-500 border-green-500/20' :
-                                                        agent.status === 'Probation' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
-                                                            'bg-red-500/10 text-red-500 border-red-500/20'
+                                                    agent.status === 'Probation' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
+                                                        'bg-red-500/10 text-red-500 border-red-500/20'
                                                     }`}>
                                                     {agent.status}
                                                 </div>
