@@ -22,7 +22,7 @@ import { WagmiProvider } from 'wagmi';
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-    appName: 'Claw Quants',
+    appName: 'VeriAgent',
     projectId: 'YOUR_PROJECT_ID', // Note: User will need to replace this eventually, but it works without for testing often or with public IDs
     wallets: [
         ...wallets,
@@ -46,7 +46,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <QueryClientProvider client={queryClient}>
                 <RainbowKitProvider
                     theme={darkTheme({
-                        accentColor: '#FF6363',
+                        accentColor: '#A03A13',
                         accentColorForeground: 'white',
                         borderRadius: 'small',
                         fontStack: 'system',

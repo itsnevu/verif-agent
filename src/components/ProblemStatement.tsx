@@ -23,7 +23,7 @@ const problems = [
 
 export default function ProblemStatement() {
     return (
-        <section className="py-24 bg-[#1a1a1a] relative overflow-hidden">
+        <section className="py-24 bg-gray-900 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -42,7 +42,7 @@ export default function ProblemStatement() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2 }}
-                            className="p-8 rounded-2xl bg-[#262626] border border-white/5 hover:border-primary/50 transition-colors group"
+                            className="p-8 rounded-2xl bg-gray-800 border border-white/5 hover:border-primary/50 transition-colors group"
                         >
                             <div className="mb-6 p-4 bg-black/30 rounded-full w-fit group-hover:bg-primary/10 transition-colors">
                                 {problem.icon}

@@ -1,0 +1,124 @@
+'use client';
+
+import { Shield, Gavel, AlertTriangle, Users } from 'lucide-react';
+
+export default function ProtocolPage() {
+    return (
+        <main className="min-h-screen bg-background text-foreground">
+            {/* Header */}
+            <div className="pt-32 pb-16 px-6 text-center bg-gray-900 border-b border-white/5">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Protocol Mechanics</h1>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                    The rules that govern trust, security, and consensus within the VeriAgent network.
+                </p>
+            </div>
+
+            <div className="max-w-5xl mx-auto px-6 py-16 space-y-24">
+
+                {/* Slashing Conditions */}
+                <section id="slashing" className="scroll-mt-32">
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="p-3 bg-red-500/10 rounded-xl">
+                            <AlertTriangle className="w-8 h-8 text-red-500" />
+                        </div>
+                        <h2 className="text-3xl font-bold text-white">Slashing Conditions</h2>
+                    </div>
+
+                    <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                        To ensure the integrity of the network, Agents and Verifier Nodes must stake VERI tokens.
+                        Malicious behavior or negligence triggers automatic slashing penalties.
+                    </p>
+
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-gray-900 border border-white/10 p-6 rounded-xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                <Shield className="w-24 h-24" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">Invalid Proofs</h3>
+                            <div className="text-red-400 font-mono text-xs uppercase font-bold mb-3 tracking-wider">100% SLASH</div>
+                            <p className="text-gray-400 text-sm">
+                                Submitting a ZK-proof that fails cryptographic verification or contradicts the referenced reasoning trace results in immediate total stake forfeiture.
+                            </p>
+                        </div>
+
+                        <div className="bg-gray-900 border border-white/10 p-6 rounded-xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                <Gavel className="w-24 h-24" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">Double Signing</h3>
+                            <div className="text-orange-400 font-mono text-xs uppercase font-bold mb-3 tracking-wider">50% SLASH</div>
+                            <p className="text-gray-400 text-sm">
+                                Validators signing two conflicting blocks or trade confirmations at the same height will have half their stake burned to prevent consensus forks.
+                            </p>
+                        </div>
+
+                        <div className="bg-gray-900 border border-white/10 p-6 rounded-xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                <AlertTriangle className="w-24 h-24" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">Downtime</h3>
+                            <div className="text-yellow-400 font-mono text-xs uppercase font-bold mb-3 tracking-wider">1-5% SLASH</div>
+                            <p className="text-gray-400 text-sm">
+                                Verifier Nodes that go offline for more than 4 hours during their assigned epoch will suffer minor progressive penalties to encourage reliability.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Governance */}
+                <section id="governance" className="scroll-mt-32">
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="p-3 bg-primary/10 rounded-xl">
+                            <Users className="w-8 h-8 text-primary" />
+                        </div>
+                        <h2 className="text-3xl font-bold text-white">Governance</h2>
+                    </div>
+
+                    <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                        VeriAgent is a DAO. The community controls key protocol parameters through on-chain voting.
+                    </p>
+
+                    <div className="bg-gray-900 border border-white/10 rounded-2xl overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 border-b md:border-b-0 md:border-r border-white/10">
+                                <h3 className="text-xl font-bold text-white mb-4">Proposal Process</h3>
+                                <ol className="space-y-4 text-gray-400 text-sm">
+                                    <li className="flex gap-4">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">1</span>
+                                        <span><strong className="text-white block mb-1">Temperature Check</strong> Discussion on the governance forum to gauge community sentiment.</span>
+                                    </li>
+                                    <li className="flex gap-4">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">2</span>
+                                        <span><strong className="text-white block mb-1">Consensus Check</strong> Off-chain Snapshot vote to confirm widespread support.</span>
+                                    </li>
+                                    <li className="flex gap-4">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">3</span>
+                                        <span><strong className="text-white block mb-1">On-Chain Vote</strong> Executable proposal submitted to the GovernorBravo contract. Requires 1% VERI supply to propose.</span>
+                                    </li>
+                                    <li className="flex gap-4">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">4</span>
+                                        <span><strong className="text-white block mb-1">Timelock Execution</strong> Passed proposals have a 48-hour timelock before code execution.</span>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div className="p-8">
+                                <h3 className="text-xl font-bold text-white mb-4">Governable Parameters</h3>
+                                <ul className="space-y-3">
+                                    {['Staking Minimums', 'Slashing Percentages', 'Protocol Fees (Trading & Verification)', 'Supported Assets & Oracles', 'Treasury Allocation'].map((item, i) => (
+                                        <li key={i} className="flex items-center gap-3 text-gray-400 text-sm">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a href="https://snapshot.org" target="_blank" className="mt-8 block text-center px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-medium transition-all w-full">
+                                    Visit Governance Forum ↗
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    );
+}

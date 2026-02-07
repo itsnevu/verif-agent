@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ChevronRight, Book, Code, Terminal, Shield, Cpu, Activity } from 'lucide-react';
+import { Search, ChevronRight, Book, Code, Terminal, Shield, Cpu, Activity, AlertCircle } from 'lucide-react';
 
 const sections = [
     {
@@ -41,26 +41,26 @@ export default function DocsPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     return (
-        <div className="min-h-screen bg-white pt-24 pb-12">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-12">
+        <div className="min-h-screen bg-background text-foreground pt-32 pb-12">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-8">
 
                 {/* Sidebar Navigation */}
-                <aside className="w-full md:w-64 flex-shrink-0">
-                    <div className="sticky top-28 space-y-8">
+                <aside className="w-full md:w-56 flex-shrink-0">
+                    <div className="sticky top-24 space-y-6">
                         {/* Search */}
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                             <input
                                 type="text"
-                                placeholder="Search documentation..."
+                                placeholder="Search..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF6363]/20 focus:border-[#FF6363] transition-all"
+                                className="w-full pl-9 pr-4 py-1.5 bg-gray-900 border border-white/10 rounded-lg text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                             />
                         </div>
 
                         {/* Navigation Links */}
-                        <nav className="space-y-6">
+                        <nav className="space-y-4">
                             {sections.map((section) => (
                                 <div key={section.id}>
                                     <div className="flex items-center gap-2 px-2 mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">
@@ -72,9 +72,9 @@ export default function DocsPage() {
                                             <li key={item.id}>
                                                 <button
                                                     onClick={() => setActiveSection(item.id)}
-                                                    className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${activeSection === item.id
-                                                            ? 'bg-[#FF6363]/10 text-[#FF6363] font-medium'
-                                                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${activeSection === item.id
+                                                        ? 'bg-primary/10 text-primary font-medium'
+                                                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                                         }`}
                                                 >
                                                     {item.title}
@@ -95,22 +95,22 @@ export default function DocsPage() {
                         {/* Content: Introduction */}
                         {activeSection === 'introduction' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h1 className="text-4xl font-bold text-gray-900 mb-6">Introduction to AI Quant Trade</h1>
-                                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                                <h1 className="text-3xl font-bold text-white mb-4">Introduction to VeriAgent</h1>
+                                <p className="text-lg text-gray-400 mb-6 leading-relaxed">
                                     The world's first decentralized marketplace for autonomous trading agents.
                                     We enable developers to deploy non-custodial quant algorithms and allow investors to copy-trade with verifiable on-chain proof.
                                 </p>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose mb-12">
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
-                                        <Cpu className="w-8 h-8 text-[#FF6363] mb-4" />
-                                        <h3 className="text-lg font-bold text-gray-900 mb-2">Autonomous Execution</h3>
-                                        <p className="text-gray-600 text-sm">Agents run 24/7 on decentralized compute nodes, executing strategies without human intervention.</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-8">
+                                    <div className="p-5 bg-gray-900 rounded-xl border border-white/10 hover:border-primary/30 transition-colors group">
+                                        <Cpu className="w-6 h-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
+                                        <h3 className="text-base font-bold text-white mb-1">Autonomous Execution</h3>
+                                        <p className="text-gray-400 text-sm leading-snug">Agents run 24/7 on decentralized compute nodes, executing strategies without human intervention.</p>
                                     </div>
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
-                                        <Shield className="w-8 h-8 text-[#FF6363] mb-4" />
-                                        <h3 className="text-lg font-bold text-gray-900 mb-2">Verifiable Proof</h3>
-                                        <p className="text-gray-600 text-sm">All trades and performance metrics are anchored on-chain, ensuring tamper-proof history.</p>
+                                    <div className="p-5 bg-gray-900 rounded-xl border border-white/10 hover:border-primary/30 transition-colors group">
+                                        <Shield className="w-6 h-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
+                                        <h3 className="text-base font-bold text-white mb-1">Verifiable Proof</h3>
+                                        <p className="text-gray-400 text-sm leading-snug">All trades and performance metrics are anchored on-chain, ensuring tamper-proof history.</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -119,49 +119,207 @@ export default function DocsPage() {
                         {/* Content: Deploy Agent */}
                         {activeSection === 'deploy-agent' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <div className="flex items-center gap-3 mb-6">
-                                    <span className="px-3 py-1 bg-[#FF6363]/10 text-[#FF6363] rounded-full text-xs font-semibold">Developer Guide</span>
-                                    <span className="text-gray-400 text-sm">Estimated time: 15 mins</span>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="px-2.5 py-0.5 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">Developer Guide</span>
+                                    <span className="text-gray-500 text-xs">15 mins read</span>
                                 </div>
 
-                                <h1 className="text-4xl font-bold text-gray-900 mb-6">Deploying Your First Agent</h1>
-                                <p className="text-lg text-gray-600 mb-8">
-                                    Follow this guide to package your Python or TypeScript strategy and deploy it to the AI Quant network.
+                                <h1 className="text-3xl font-bold text-white mb-4">Deploying Your First Agent</h1>
+                                <p className="text-base text-gray-400 mb-6">
+                                    Follow this guide to package your Python or TypeScript strategy and deploy it to the VeriAgent network.
                                 </p>
 
-                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Install the CLI</h3>
-                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
-                                    <span className="text-[#FF6363]">$</span> npm install -g @ai-quant/cli<br />
-                                    <span className="text-[#FF6363]">$</span> ai-quant login
+                                <h3 className="text-xl font-bold text-white mt-8 mb-3">1. Install the CLI</h3>
+                                {/* Code Block */}
+                                <div className="bg-gray-900 border border-white/10 text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-2xl overflow-x-auto relative group">
+                                    <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
+                                    </div>
+                                    <div className="leading-relaxed">
+                                        <span className="text-secondary">$</span> npm install -g @veriagent/cli<br />
+                                        <span className="text-secondary">$</span> veriagent login
+                                    </div>
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. Initialize Project</h3>
-                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
-                                    <span className="text-[#FF6363]">$</span> ai-quant init my-strategy --template mean-reversion
+                                <h3 className="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-3">
+                                    <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs">2</span>
+                                    Initialize Project
+                                </h3>
+                                <div className="bg-gray-900 border border-white/10 text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-xl overflow-x-auto">
+                                    <span className="text-secondary">$</span> veriagent init my-strategy --template mean-reversion
                                 </div>
 
-                                <div className="p-4 border-l-4 border-[#FF6363] bg-[#FF6363]/5 rounded-r-lg my-8">
-                                    <h4 className="font-bold text-[#FF6363] mb-1">Requirement</h4>
-                                    <p className="text-sm text-gray-700">You must hold at least 1000 AIQ tokens to deploy a mainnet agent. This serves as a spam prevention mechanism.</p>
+                                <div className="p-4 border-l-2 border-primary bg-primary/5 rounded-r-lg my-6 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-4 opacity-10">
+                                        <AlertCircle className="w-16 h-16 text-primary" />
+                                    </div>
+                                    <h4 className="font-bold text-primary mb-1 flex items-center gap-2 text-sm">
+                                        <AlertCircle className="w-4 h-4" />
+                                        Requirement
+                                    </h4>
+                                    <p className="text-xs text-gray-400 relative z-10 leading-relaxed">You must hold at least 1000 VERI tokens to deploy a mainnet agent. This serves as a spam prevention mechanism and aligns incentives.</p>
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Deploy</h3>
-                                <div className="bg-[#1e1e1e] text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-lg overflow-x-auto">
-                                    <span className="text-[#FF6363]">$</span> ai-quant deploy --network mainnet
+                                <h3 className="text-xl font-bold text-white mt-8 mb-3 flex items-center gap-3">
+                                    <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs">3</span>
+                                    Deploy to Mainnet
+                                </h3>
+                                <div className="bg-gray-900 border border-white/10 text-gray-300 p-4 rounded-lg font-mono text-sm mb-6 shadow-xl overflow-x-auto">
+                                    <span className="text-secondary">$</span> veriagent deploy --network mainnet
                                 </div>
                             </motion.div>
                         )}
 
-                        {/* Fallback for other sections */}
-                        {(activeSection !== 'introduction' && activeSection !== 'deploy-agent') && (
+                        {/* Content: Architecture */}
+                        {activeSection === 'architecture' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h1 className="text-4xl font-bold text-gray-900 mb-6 capitalize">{activeSection.replace('-', ' ')}</h1>
-                                <div className="p-12 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center text-center">
-                                    <Activity className="w-12 h-12 text-gray-300 mb-4" />
-                                    <h3 className="text-lg font-semibold text-gray-900">Content Coming Soon</h3>
-                                    <p className="text-gray-500 max-w-md mt-2">
-                                        Our team is currently writing the documentation for this section. Check back later or join our Discord for updates.
-                                    </p>
+                                <h1 className="text-3xl font-bold text-white mb-6">Protocol Architecture</h1>
+                                <p className="text-lg text-gray-400 mb-8">
+                                    VeriAgent uses a three-layer architecture to ensure trustless execution of off-chain AI agents.
+                                </p>
+
+                                <div className="space-y-8">
+                                    <div className="bg-gray-900 border border-white/10 p-6 rounded-xl">
+                                        <h3 className="text-xl font-bold text-primary mb-2">1. Execution Layer (Off-Chain)</h3>
+                                        <p className="text-gray-400 text-sm mb-4">
+                                            Agents run on decentralized compute nodes (VeriNodes). They ingest market data and generate trade signals.
+                                            Crucially, they must also generate a <span className="text-white font-mono">Reasoning Trace</span> for every action.
+                                        </p>
+                                        <div className="bg-black/30 p-3 rounded-lg font-mono text-xs text-gray-500">
+                                            Input: Market Data + Strategy Parameters<br />
+                                            Output: Trade Signal + ZK-Proof Hash
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-gray-900 border border-white/10 p-6 rounded-xl">
+                                        <h3 className="text-xl font-bold text-secondary mb-2">2. Verification Layer (ZK-Rollup)</h3>
+                                        <p className="text-gray-400 text-sm">
+                                            The Reasoning Trace is compressed into a ZK-SNARK proof. This proves the agent followed its stated strategy and risk limits without revealing proprietary logic.
+                                        </p>
+                                    </div>
+
+                                    <div className="bg-gray-900 border border-white/10 p-6 rounded-xl">
+                                        <h3 className="text-xl font-bold text-white mb-2">3. Settlement Layer (On-Chain)</h3>
+                                        <p className="text-gray-400 text-sm">
+                                            The Verifier Contract validates the proof. If valid, the trade is executed atomically on the DEX. If invalid or malicious, the transaction is reverted and the agent's stake is slashed.
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Content: Tokenomics */}
+                        {activeSection === 'tokenomics' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-3xl font-bold text-white mb-6">Tokenomics ($VERI)</h1>
+                                <p className="text-lg text-gray-400 mb-8">
+                                    The VERI token aligns incentives between agents, verifiers, and investors.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                    <div className="p-6 bg-gray-900 border border-white/10 rounded-xl">
+                                        <Shield className="w-8 h-8 text-primary mb-4" />
+                                        <h3 className="text-lg font-bold text-white mb-2">Staking & Slashing</h3>
+                                        <p className="text-sm text-gray-400">Agents must stake VERI to deploy. Malicious behavior results in immediate slashing of the stake.</p>
+                                    </div>
+                                    <div className="p-6 bg-gray-900 border border-white/10 rounded-xl">
+                                        <Activity className="w-8 h-8 text-secondary mb-4" />
+                                        <h3 className="text-lg font-bold text-white mb-2">Compute Payment</h3>
+                                        <p className="text-sm text-gray-400">VeriNodes earn VERI for providing compute power and generating ZK proofs.</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Content: SDK Reference */}
+                        {activeSection === 'sdk-reference' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-3xl font-bold text-white mb-6">SDK Reference</h1>
+                                <p className="text-gray-400 mb-6">The core library for building VeriAgents.</p>
+
+                                <h3 className="text-xl font-bold text-white mb-4">Basic Agent Structure</h3>
+                                <div className="bg-gray-900 border border-white/10 p-4 rounded-xl font-mono text-sm text-gray-300 overflow-x-auto mb-8">
+                                    <pre>{`import { Agent, Context } from '@veriagent/sdk';
+
+export class MyStrategy extends Agent {
+    async onTick(ctx: Context) {
+        const price = await ctx.getPrice('ETH/USD');
+        
+        // Define reasoning trace
+        ctx.reason({
+            observation: \`Price \${price} below MA-200\`,
+            logic: "Trend reversal detected",
+            action: "BUY"
+        });
+
+        if (price < 2000) {
+            return ctx.order.marketBuy('ETH', 1.5);
+        }
+    }
+}`}</pre>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Content: Backtesting */}
+                        {activeSection === 'testing' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-3xl font-bold text-white mb-6">Backtesting</h1>
+                                <p className="text-gray-400 mb-6">Verify your strategy against historical data before mainnet deployment.</p>
+
+                                <div className="bg-gray-900 border border-white/10 p-4 rounded-xl font-mono text-sm mb-6">
+                                    <span className="text-secondary">$</span> veriagent backtest --strategy src/main.ts --days 30
+                                </div>
+                                <p className="text-sm text-gray-400">
+                                    The backtester runs your agent in a sandboxed environment, simulating market conditions and verifying that valid Proof-of-Reasoning traces are generated for every trade.
+                                </p>
+                            </motion.div>
+                        )}
+
+                        {/* Content: WebSocket */}
+                        {activeSection === 'websocket' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-3xl font-bold text-white mb-6">WebSocket API</h1>
+                                <p className="text-gray-400 mb-6">Real-time feeds for agent status and market events.</p>
+
+                                <div className="bg-gray-900 border border-white/10 p-4 rounded-xl font-mono text-sm mb-6">
+                                    wss://api.veriagent.network/v1/stream
+                                </div>
+
+                                <h3 className="text-lg font-bold text-white mb-2">Subscribe to Agent</h3>
+                                <div className="bg-gray-900 border border-white/10 p-4 rounded-xl font-mono text-xs text-gray-300">
+                                    {`{
+  "op": "subscribe",
+  "channel": "agent_execution",
+  "agent_id": "AG-8823"
+}`}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Content: REST API */}
+                        {activeSection === 'rest-api' && (
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                                <h1 className="text-3xl font-bold text-white mb-6">REST API</h1>
+
+                                <div className="space-y-6">
+                                    <div className="p-4 bg-gray-900 border border-white/10 rounded-xl">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="bg-green-500/20 text-green-500 px-2 py-0.5 rounded text-xs font-bold">GET</span>
+                                            <code className="text-sm text-white">/v1/agents</code>
+                                        </div>
+                                        <p className="text-sm text-gray-400">List all verified agents needing updates.</p>
+                                    </div>
+
+                                    <div className="p-4 bg-gray-900 border border-white/10 rounded-xl">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="bg-green-500/20 text-green-500 px-2 py-0.5 rounded text-xs font-bold">GET</span>
+                                            <code className="text-sm text-white">/v1/agents/{'{id}'}/proofs</code>
+                                        </div>
+                                        <p className="text-sm text-gray-400">Get history of ZK-proofs for a specific agent.</p>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}

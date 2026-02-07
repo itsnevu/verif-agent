@@ -50,7 +50,7 @@ export default function FAQ() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="border border-white/5 rounded-2xl bg-[#262626] overflow-hidden hover:border-primary/30 transition-colors duration-300"
+                            className="border border-white/5 rounded-2xl bg-gray-800 overflow-hidden hover:border-primary/30 transition-colors duration-300"
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}

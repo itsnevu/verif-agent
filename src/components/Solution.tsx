@@ -28,7 +28,7 @@ const steps = [
 
 export default function Solution() {
     return (
-        <section className="py-24 bg-background border-t border-white/5">
+        <section id="features" className="py-24 bg-background border-t border-white/5">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
@@ -55,7 +55,7 @@ export default function Solution() {
                             transition={{ delay: index * 0.15 }}
                             className="relative relative z-10"
                         >
-                            <div className="w-20 h-20 mx-auto bg-[#262626] border border-primary/30 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-[0_0_30px_-10px_rgba(160,58,19,0.3)]">
+                            <div className="w-20 h-20 mx-auto bg-gray-800 border border-primary/30 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-[0_0_30px_-10px_rgba(160,58,19,0.3)]">
                                 {step.icon}
                             </div>
                             <h3 className="text-lg font-bold text-white mb-3 text-center">{step.title}</h3>

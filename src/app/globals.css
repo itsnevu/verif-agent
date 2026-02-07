@@ -8,7 +8,7 @@
   /* Colors */
   --primary: #A03A13;
   --secondary: #F5824A;
-  
+
   /* Gray Scale (Adapted for Dark Theme) */
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
@@ -36,12 +36,12 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-jakarta);
+  --font-sans: "Helvetica", "Arial", sans-serif;
 
   /* Custom Colors */
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  
+
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
   --color-gray-200: var(--gray-200);
@@ -66,7 +66,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  font-family: "Helvetica", "Arial", sans-serif;
   overflow-x: hidden;
 }
 
