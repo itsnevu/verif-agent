@@ -53,9 +53,9 @@ export default function Solution() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.15 }}
-                            className="relative z-10"
+                            className="relative z-10 group cursor-default hover:scale-[1.02] transition-transform duration-300"
                         >
-                            <div className="w-20 h-20 mx-auto bg-white border border-black/10 rounded-2xl flex items-center justify-center text-black mb-6 shadow-xl shadow-gray-200">
+                            <div className="w-20 h-20 mx-auto bg-white border border-black/10 rounded-2xl flex items-center justify-center text-black mb-6 shadow-xl shadow-gray-200 group-hover:shadow-2xl group-hover:border-black/20 transition-all duration-300">
                                 {step.icon}
                             </div>
                             <h3 className="text-lg font-bold text-black mb-3 text-center">{step.title}</h3>
@@ -63,10 +63,10 @@ export default function Solution() {
                                 {step.description}
                             </p>
 
-                            {/* Arrow for mobile */}
+                            {/* Vertical connector for mobile */}
                             {index < steps.length - 1 && (
-                                <div className="md:hidden flex justify-center py-4">
-                                    <ArrowRight className="w-6 h-6 text-gray-700" />
+                                <div className="md:hidden flex justify-center py-6">
+                                    <div className="w-0.5 h-8 bg-gradient-to-b from-black/20 to-transparent" />
                                 </div>
                             )}
                         </motion.div>

@@ -9,15 +9,9 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/favicon-whatsapp.jpeg",
+      "src": "/Logo%20vra_1.svg",
       "sizes": "any",
-      "type": "image/jpeg",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]

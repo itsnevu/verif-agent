@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Wallet } from 'lucide-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
@@ -36,7 +36,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-9 h-9">
               <Image
-                src="/vra_1.svg"
+                src="/Logo%20vra_1.svg"
                 alt="0xVRE Logo"
                 width={36}
                 height={36}
@@ -162,13 +162,14 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {
-          mobileMenuOpen && (
+        <AnimatePresence>
+          {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="md:hidden mt-4 py-4 px-4 space-y-3 bg-white/95 backdrop-blur-md rounded-lg border border-black/5 shadow-xl"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden mt-4 py-4 px-4 space-y-3 bg-white/95 backdrop-blur-md rounded-lg border border-black/5 shadow-xl overflow-hidden"
             >
               <a href="/#features" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-600 hover:text-black transition-colors py-2">
                 Features
@@ -245,8 +246,8 @@ export default function Navbar() {
                 }}
               </ConnectButton.Custom>
             </motion.div>
-          )
-        }
+          )}
+        </AnimatePresence>
       </div >
     </motion.nav >
   );

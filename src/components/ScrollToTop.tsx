@@ -39,10 +39,10 @@ export default function ScrollToTop() {
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 z-50 group pointer-events-auto"
                 >
-                    {/* Glow Container */}
-                    <div className="relative flex items-center justify-center p-3 bg-white/90 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg hover:border-black/30 transition-colors duration-300">
+                    {/* Light Theme Container */}
+                    <div className="relative flex items-center justify-center p-3 bg-white backdrop-blur-md rounded-xl border border-gray-200 shadow-lg hover:shadow-xl hover:border-black/30 transition-all duration-300">
                         {/* Animated Ring */}
-                        <div className="absolute inset-0 rounded-xl border-2 border-black opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
+                        <div className="absolute inset-0 rounded-xl border-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                         {/* Icon */}
                         <ChevronUp className="w-6 h-6 text-black group-hover:text-gray-700 transition-colors relative z-10" />

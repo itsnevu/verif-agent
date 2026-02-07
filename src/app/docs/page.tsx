@@ -61,29 +61,39 @@ export default function DocsPage() {
 
                         {/* Navigation Links */}
                         <nav className="space-y-4">
-                            {sections.map((section) => (
-                                <div key={section.id}>
-                                    <div className="flex items-center gap-2 px-2 mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                        {section.icon}
-                                        {section.title}
+                            {sections.map((section) => {
+                                // Filter items based on search query
+                                const filteredItems = section.items.filter(item =>
+                                    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+                                );
+
+                                // Hide section if no items match and search is active
+                                if (searchQuery && filteredItems.length === 0) return null;
+
+                                return (
+                                    <div key={section.id}>
+                                        <div className="flex items-center gap-2 px-2 mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                            {section.icon}
+                                            {section.title}
+                                        </div>
+                                        <ul className="space-y-1">
+                                            {(searchQuery ? filteredItems : section.items).map((item) => (
+                                                <li key={item.id}>
+                                                    <button
+                                                        onClick={() => setActiveSection(item.id)}
+                                                        className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${activeSection === item.id
+                                                            ? 'bg-black/5 text-black font-medium'
+                                                            : 'text-gray-600 hover:bg-gray-100 hover:text-black'
+                                                            }`}
+                                                    >
+                                                        {item.title}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
-                                    <ul className="space-y-1">
-                                        {section.items.map((item) => (
-                                            <li key={item.id}>
-                                                <button
-                                                    onClick={() => setActiveSection(item.id)}
-                                                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${activeSection === item.id
-                                                        ? 'bg-black/5 text-black font-medium'
-                                                        : 'text-gray-600 hover:bg-gray-100 hover:text-black'
-                                                        }`}
-                                                >
-                                                    {item.title}
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </nav>
                     </div>
                 </aside>

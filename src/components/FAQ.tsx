@@ -57,7 +57,7 @@ export default function FAQ() {
                                 className="w-full flex items-center justify-between p-6 text-left"
                             >
                                 <span className="font-semibold text-black">{faq.question}</span>
-                                <div className={`p-2 rounded-full transition-colors ${openIndex === index ? 'bg-black text-white' : 'bg-gray-100 text-gray-500'}`}>
+                                <div className={`p-2 rounded-full transition-colors ${openIndex === index ? 'bg-gray-200 text-black' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
                                     {openIndex === index ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                                 </div>
                             </button>

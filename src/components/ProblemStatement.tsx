@@ -44,7 +44,7 @@ export default function ProblemStatement() {
                             transition={{ delay: index * 0.2 }}
                             className="p-8 rounded-2xl bg-white border border-gray-200 hover:border-black/50 transition-colors group shadow-lg hover:shadow-xl"
                         >
-                            <div className="mb-6 p-4 bg-gray-100 rounded-full w-fit group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                            <div className="mb-6 p-4 bg-gray-100 rounded-full w-fit group-hover:bg-gray-200 transition-colors duration-300">
                                 {problem.icon}
                             </div>
                             <h3 className="text-xl font-bold text-black mb-4">{problem.title}</h3>
