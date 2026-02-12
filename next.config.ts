@@ -3,7 +3,7 @@ import withPWA from 'next-pwa';
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
-  // turbopack: {}, // Silence webpack config warning from next-pwa (commented out as it might cause issues if not using turbopack explicitly)
+  turbopack: {}, // Satisfy Next.js 16 build requirements when plugins touch webpack
 };
 
 export default withPWA({
