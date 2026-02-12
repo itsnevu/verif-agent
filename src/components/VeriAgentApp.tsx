@@ -276,14 +276,21 @@ export default function VeriAgentApp() {
     }, []);
 
     // Filter Logic
-    const filteredAgents = agents.filter(a =>
-        (filterStatus === 'All Statuses' || a.status === filterStatus) &&
-        (a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            a.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            a.type.toLowerCase().includes(searchTerm.toLowerCase()))
-    ).sort((a, b) => {
-        if (sortBy === 'Reputation') return b.reputation - a.reputation;
-        if (sortBy === 'Stake') return parseInt(b.stake.replace(/,/g, '')) - parseInt(a.stake.replace(/,/g, ''));
+    const safeSearch = String(searchTerm || '').toLowerCase();
+    const filteredAgents = agents.filter((a) => {
+        const safeName = String(a?.name ?? '');
+        const safeId = String(a?.id ?? '');
+        const safeType = String(a?.type ?? '');
+        const safeStatus = String(a?.status ?? '');
+        return (
+            (filterStatus === 'All Statuses' || safeStatus === filterStatus) &&
+            (safeName.toLowerCase().includes(safeSearch) ||
+                safeId.toLowerCase().includes(safeSearch) ||
+                safeType.toLowerCase().includes(safeSearch))
+        );
+    }).sort((a, b) => {
+        if (sortBy === 'Reputation') return Number(b?.reputation ?? 0) - Number(a?.reputation ?? 0);
+        if (sortBy === 'Stake') return parseInt(String(b?.stake ?? '').replace(/,/g, '')) - parseInt(String(a?.stake ?? '').replace(/,/g, ''));
         return 0;
     });
 
@@ -451,13 +458,16 @@ export default function VeriAgentApp() {
                                                 </div>
                                             )}
 
-                                            {deployLogs.map((log, i) => (
-                                                <div key={i} suppressHydrationWarning className={`flex items-start gap-3 ${log.text.includes('✅') ? 'text-green-400 font-bold bg-green-900/10 p-2 rounded -mx-2 border border-green-900/20' : log.text.includes('❌') ? 'text-red-400 font-bold bg-red-900/10 p-2 rounded -mx-2 border border-red-900/20' : 'text-gray-400'}`}>
+                                            {deployLogs.map((log, i) => {
+                                                const safeLogText = String(log?.text ?? '');
+                                                return (
+                                                <div key={i} suppressHydrationWarning className={`flex items-start gap-3 ${safeLogText.includes('✅') ? 'text-green-400 font-bold bg-green-900/10 p-2 rounded -mx-2 border border-green-900/20' : safeLogText.includes('❌') ? 'text-red-400 font-bold bg-red-900/10 p-2 rounded -mx-2 border border-red-900/20' : 'text-gray-400'}`}>
                                                     <span className="text-gray-600 select-none mt-0.5 text-[10px] whitespace-nowrap">[{log.time}]</span>
                                                     <span className="text-gray-700 select-none mt-0.5">$</span>
-                                                    <span>{log.text}</span>
+                                                    <span>{safeLogText}</span>
                                                 </div>
-                                            ))}
+                                                );
+                                            })}
 
                                             {/* Step 1: Claim Card (After Deploy) */}
                                             {(deployStep === 'deployed' || deployStep === 'payment_pending' || deployStep === 'activated') && (
@@ -660,17 +670,17 @@ export default function VeriAgentApp() {
                                         >
                                             <div className="flex justify-between items-start mb-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center font-bold">{agent.name.charAt(0)}</div>
+                                                    <div className="w-10 h-10 rounded-lg bg-black text-white flex items-center justify-center font-bold">{String(agent?.name ?? '?').charAt(0)}</div>
                                                     <div>
-                                                        <h4 className="text-sm font-bold text-black truncate max-w-[120px]">{agent.name}</h4>
-                                                        <div className="text-[10px] text-gray-500">{agent.id}</div>
+                                                        <h4 className="text-sm font-bold text-black truncate max-w-[120px]">{String(agent?.name ?? 'Unknown Agent')}</h4>
+                                                        <div className="text-[10px] text-gray-500">{String(agent?.id ?? 'N/A')}</div>
                                                     </div>
                                                 </div>
-                                                <div className="px-2 py-1 rounded-full text-[10px] bg-gray-50 border border-gray-200">{agent.status}</div>
+                                                <div className="px-2 py-1 rounded-full text-[10px] bg-gray-50 border border-gray-200">{String(agent?.status ?? 'Unknown')}</div>
                                             </div>
                                             <div className="mt-auto grid grid-cols-2 gap-2 text-xs">
-                                                <div><div className="text-gray-400">Rep</div><div className="font-bold">{agent.reputation}</div></div>
-                                                <div><div className="text-gray-400">Stake</div><div className="font-bold">{agent.stake}</div></div>
+                                                <div><div className="text-gray-400">Rep</div><div className="font-bold">{String(agent?.reputation ?? 0)}</div></div>
+                                                <div><div className="text-gray-400">Stake</div><div className="font-bold">{String(agent?.stake ?? '0 VERI')}</div></div>
                                             </div>
                                         </motion.div>
                                     ))}
