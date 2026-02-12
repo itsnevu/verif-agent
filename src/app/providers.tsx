@@ -3,35 +3,69 @@
 import * as React from 'react';
 import {
     RainbowKitProvider,
-    getDefaultWallets,
-    lightTheme,
+    getDefaultConfig,
+    lightTheme
 } from '@rainbow-me/rainbowkit';
+import {
+    metaMaskWallet,
+
+    trustWallet,
+    ledgerWallet,
+    argentWallet,
+    coinbaseWallet,
+    rainbowWallet,
+    walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 import {
     mainnet,
     sepolia,
 } from 'viem/chains';
-import { createConfig, http } from 'wagmi';
+import { http } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 
+// Use a fallback generic Project ID if one isn't provided (for demo/dev purposes)
+// In production, this MUST be set to a valid WalletConnect Cloud Project ID
 const PROJECT_ID = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '3a8170812b534d0ff9d794f19a901d64';
 
-const { connectors } = getDefaultWallets({
+// Use getDefaultConfig normally
+const config = getDefaultConfig({
     appName: '0xVRE',
     projectId: PROJECT_ID,
+    chains: [
+        mainnet,
+        ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    ],
+    wallets: [
+        {
+            groupName: 'Recommended',
+            wallets: [
+                metaMaskWallet,
+                rainbowWallet,
+                coinbaseWallet,
+                walletConnectWallet,
+            ],
+        },
+        {
+            groupName: 'Other',
+            wallets: [
+                argentWallet,
+                trustWallet,
+                ledgerWallet,
+            ],
+        },
+    ],
+    ssr: false // Keep ssr: false for speed
 });
 
-const config = createConfig({
-    connectors,
-    chains: [mainnet, ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : [])],
-    transports: {
-        [mainnet.id]: http('https://eth.llama.rpc.com'),
-        [sepolia.id]: http('https://rpc.sepolia.org'),
-    },
-    batch: { multicall: true },
-    ssr: false,
-    pollingInterval: 12_000,
-});
+// Manually ensure fast RPCs to override defaults if possible, 
+// or at least define transports which might be merged by wagmi if config is mutable.
+// Note: getDefaultConfig returns a wagmi config object. We can mutate it to ensure performance.
+config.transports = {
+    [mainnet.id]: http('https://eth.llama.rpc.com'),
+    [sepolia.id]: http('https://rpc.sepolia.org'),
+};
+config.pollingInterval = 12_000;
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = React.useState(() => new QueryClient());
