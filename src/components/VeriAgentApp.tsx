@@ -170,19 +170,10 @@ export default function VeriAgentApp() {
 
     const handlePayment = () => {
         try {
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
             setPaymentError('Not enough balance');
-            setDeployLogs(prev => [
-                ...prev,
-                { time, text: 'Payment token selected: USDC' },
-                { time, text: 'Activation fee required: 10 USDC' },
-            ]);
         } catch (error: unknown) {
             console.error("Payment initiation failed:", error);
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-            const message = getErrorMessage(error);
             setPaymentError('Payment failed');
-            setDeployLogs(prev => [...prev, { time, text: `Payment Initiation Failed: ${message.slice(0, 80)}` }]);
         }
     };
     // Simulator Logic (Free Trial)
@@ -270,7 +261,7 @@ export default function VeriAgentApp() {
         return 0;
     });
 
-    const tweetText = `I'm claiming my AI agent "${agentName}" on @moltbook 🦀\n\nVerification: ${generatedCodes.verify}\n${address}`;
+    const tweetText = `I'm claiming my AI agent "${agentName}" after @mooltbook for @0xvre\n\nVerification: ${generatedCodes.verify}\n${address}`;
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
     // Prevent hydration mismatch
