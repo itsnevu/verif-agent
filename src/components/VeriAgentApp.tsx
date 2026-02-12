@@ -50,6 +50,7 @@ const NODE_LOG_TEMPLATES = [
     "Received ZK-SNARK proof from {agent}",
     "Indexing event logs..."
 ];
+const TABS: Array<'deploy' | 'inference' | 'registry' | 'node'> = ['deploy', 'inference', 'registry', 'node'];
 
 export default function VeriAgentApp() {
     const [isMounted, setIsMounted] = useState(false);
@@ -83,6 +84,15 @@ export default function VeriAgentApp() {
     const [nodeLogs, setNodeLogs] = useState<string[]>([]);
     const [totalProofs, setTotalProofs] = useState(1248932);
     const nodeLogContainerRef = useRef<HTMLDivElement>(null);
+
+    const getErrorMessage = (error: unknown): string => {
+        if (typeof error === 'string') return error;
+        if (error && typeof error === 'object' && 'message' in error) {
+            const message = (error as { message?: unknown }).message;
+            if (typeof message === 'string') return message;
+        }
+        return 'Unknown transaction error';
+    };
 
     // Setup mounted state to prevent hydration errors
     useEffect(() => {
@@ -153,9 +163,10 @@ export default function VeriAgentApp() {
                     { time, text: "✅ STATUS: LIVE" }
                     ]);
                 },
-                onError: (error: any) => {
+                onError: (error: unknown) => {
                     const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                    setDeployLogs(prev => [...prev, { time, text: `❌ Payment Error: ${error.message.slice(0, 50)}...` }]);
+                    const message = getErrorMessage(error);
+                    setDeployLogs(prev => [...prev, { time, text: `Payment Error: ${message.slice(0, 80)}` }]);
                 }
             });
 
@@ -167,10 +178,11 @@ export default function VeriAgentApp() {
                  // ...
             }, 5000); 
             */
-        } catch (error) {
+        } catch (error: unknown) {
             console.error("Payment initiation failed:", error);
             const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-            setDeployLogs(prev => [...prev, { time, text: `❌ Payment Initiation Failed.` }]);
+            const message = getErrorMessage(error);
+            setDeployLogs(prev => [...prev, { time, text: `Payment Initiation Failed: ${message.slice(0, 80)}` }]);
         }
     };
 
@@ -257,10 +269,10 @@ export default function VeriAgentApp() {
                         <p className="text-gray-600">Deploy agents, verify proofs, and monitor network status.</p>
                     </div>
                     <div className="flex p-1.5 bg-gray-50/50 backdrop-blur-md rounded-2xl border border-gray-200/50 shadow-inner overflow-x-auto max-w-full">
-                        {['deploy', 'inference', 'registry', 'node'].map((tab) => (
+                        {TABS.map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setActiveTab(tab as any)}
+                                onClick={() => setActiveTab(tab)}
                                 className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all capitalize duration-300 whitespace-nowrap ${activeTab === tab ? 'bg-white text-black shadow-lg shadow-black/5 ring-1 ring-black/5 scale-[1.02]' : 'text-gray-500 hover:text-black hover:bg-white/50'}`}
                             >
                                 {tab === 'deploy' ? 'Deploy Agent' : tab === 'inference' ? 'Live Inference (LIVE!!)' : tab === 'registry' ? 'Agent Registry' : 'Node Status'}
@@ -298,7 +310,8 @@ export default function VeriAgentApp() {
                                                     <ConnectButton.Custom>
                                                         {({ openConnectModal }) => (
                                                             <button
-                                                                onClick={openConnectModal}
+                                                                onClick={() => openConnectModal?.()}
+                                                                disabled={!openConnectModal}
                                                                 className="px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-all shadow-lg shadow-black/10 flex items-center gap-2 text-sm"
                                                             >
                                                                 Connect Wallet <span className="text-gray-400">→</span>
@@ -446,7 +459,7 @@ export default function VeriAgentApp() {
                                                                 onClick={() => setDeployStep('payment_pending')}
                                                                 className="w-full py-2 border border-gray-700 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors text-xs"
                                                             >
-                                                                I've posted the tweet → Continue
+                                                                I&apos;ve posted the tweet -&gt; Continue
                                                             </button>
                                                         </div>
                                                     )}
