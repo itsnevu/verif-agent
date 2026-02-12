@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Play, CheckCircle, XCircle, AlertCircle, FileJson, BadgeCheck, Server, Activity, Database, Shield, Terminal, RefreshCw, Filter, Wallet, Bot, Zap, Lock } from 'lucide-react';
-import { useAccount, useSendTransaction } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { parseEther } from 'viem';
 
 // --- MOCK DATA GENERATOR ---
 const AGENT_TYPES = ['DeFi Risk Manager', 'DAO Voting Advisor', 'Smart Contract Audit', 'Memecoin Sniper', 'Yield Optimizer', 'NFT Appraiser', 'Social Sentiment', 'MEV Protection'];
@@ -55,7 +54,6 @@ const TABS: Array<'deploy' | 'inference' | 'registry' | 'node'> = ['deploy', 'in
 export default function VeriAgentApp() {
     const [isMounted, setIsMounted] = useState(false);
     const { address, isConnected } = useAccount();
-    const { sendTransaction, isPending: isTxPending } = useSendTransaction();
     const [activeTab, setActiveTab] = useState<'deploy' | 'inference' | 'registry' | 'node'>('deploy');
 
     // -- DEPLOY STATE --
@@ -172,35 +170,16 @@ export default function VeriAgentApp() {
     };
 
     const handlePayment = () => {
-        // approx $0.10 USD at $2500 ETH = 0.00004 ETH
         try {
-            sendTransaction({
-                to: '0x000000000000000000000000000000000000dEaD',
-                value: parseEther('0.00004')
-            }, {
-                onSuccess: () => {
-                    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                    setDeployStep('activated');
-                    setDeployLogs(prev => [...prev,
-                    { time, text: "Payment confirmed. Agent activated on x402 Mainnet." },
-                    { time, text: "✅ STATUS: LIVE" }
-                    ]);
-                },
-                onError: (error: unknown) => {
-                    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                    const message = getErrorMessage(error);
-                    setDeployLogs(prev => [...prev, { time, text: `Payment Error: ${message.slice(0, 80)}` }]);
-                }
-            });
-
-            // Backup simulation for demo purposes if wallet interaction fails/is cancelled but state needs to progress (optional, kept for robustness)
-            // In production, remove this timeout block and rely solely on `onSuccess`
-            /* 
-            setTimeout(() => {
-                 setDeployStep('activated');
-                 // ...
-            }, 5000); 
-            */
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            const notice = 'Not enough balance: minimum 10 USDC is required for activation.';
+            setRuntimeNotice(notice);
+            setDeployLogs(prev => [
+                ...prev,
+                { time, text: 'Payment token selected: USDC' },
+                { time, text: 'Activation fee required: 10 USDC' },
+                { time, text: `? ${notice}` },
+            ]);
         } catch (error: unknown) {
             console.error("Payment initiation failed:", error);
             const time = new Date().toLocaleTimeString('en-US', { hour12: false });
@@ -208,7 +187,6 @@ export default function VeriAgentApp() {
             setDeployLogs(prev => [...prev, { time, text: `Payment Initiation Failed: ${message.slice(0, 80)}` }]);
         }
     };
-
     // Simulator Logic (Free Trial)
     const runSimulation = () => {
         if (simulationStep === 'running') return;
@@ -407,7 +385,7 @@ export default function VeriAgentApp() {
                                                         <div className="space-y-1">
                                                             <div className="text-xs font-bold text-yellow-800 uppercase tracking-wide">Network Requirement</div>
                                                             <p className="text-xs text-yellow-700 leading-relaxed">
-                                                                Deployment is free. Activation requires <span className="font-mono font-bold bg-yellow-100 px-1 rounded">$0.10 (ETH)</span>.
+                                                                Deployment is free. Activation requires <span className="font-mono font-bold bg-yellow-100 px-1 rounded">10 USDC</span>.
                                                             </p>
                                                         </div>
                                                     </div>
@@ -433,7 +411,7 @@ export default function VeriAgentApp() {
                                     </div>
 
                                     {/* Right Panel: Terminal */}
-                                    <div className="md:col-span-7 bg-[#0F0F11] text-gray-200 p-8 font-mono text-sm relative border-l border-black overflow-hidden flex flex-col">
+                                    <div className="md:col-span-7 bg-[#0F0F11] text-gray-200 p-8 font-mono text-sm relative overflow-hidden flex flex-col mr-4 mb-4 rounded-2xl border border-gray-900/80">
 
                                         {/* Terminal Header */}
                                         <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-800/50">
@@ -448,7 +426,7 @@ export default function VeriAgentApp() {
                                         </div>
 
                                         {/* Terminal Body */}
-                                        <div ref={deployLogRef} className="flex-1 space-y-3 overflow-y-auto custom-scrollbar min-h-[300px] font-mono text-xs leading-relaxed">
+                                        <div ref={deployLogRef} className="flex-1 space-y-3 overflow-y-auto custom-scrollbar min-h-[300px] font-mono text-xs leading-relaxed pb-5 pr-1">
                                             {deployLogs.length === 0 && (
                                                 <div className="h-full flex flex-col items-center justify-center text-gray-700 space-y-4 opacity-50">
                                                     <div className="w-12 h-12 border border-dashed border-gray-700 rounded-lg flex items-center justify-center">
@@ -528,14 +506,9 @@ export default function VeriAgentApp() {
                                                             </div>
                                                             <button
                                                                 onClick={() => safeExecute('agent-activation-payment', handlePayment)}
-                                                                disabled={isTxPending}
-                                                                className={`w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 ${isTxPending ? 'bg-gray-700 text-gray-300 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500 text-white shadow-green-900/20'}`}
+                                                                className="w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white shadow-green-900/20"
                                                             >
-                                                                {isTxPending ? (
-                                                                    <><RefreshCw className="w-4 h-4 animate-spin" /> Processing Payment...</>
-                                                                ) : (
-                                                                    <>Pay $0.10 to Activate Agent <span className="text-[10px] bg-black/20 px-2 py-0.5 rounded ml-1">~0.00004 ETH</span></>
-                                                                )}
+                                                                <>Pay 10 USDC to Activate Agent <span className="text-[10px] bg-black/20 px-2 py-0.5 rounded ml-1">USDC</span></>
                                                             </button>
                                                             <button onClick={() => setDeployStep('deployed')} className="w-full mt-2 text-[10px] text-gray-500 hover:text-gray-300">
                                                                 ← Back
@@ -555,6 +528,7 @@ export default function VeriAgentApp() {
                                                 </motion.div>
                                             )}
                                         </div>
+                                        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-4 bg-[#0F0F11]" />
                                     </div>
                                 </div>
                             </motion.div>
@@ -619,12 +593,16 @@ export default function VeriAgentApp() {
                                                     Waiting for task execution...
                                                 </div>
                                             )}
-                                            {simLogs.map((log, i) => (
-                                                <div key={i} suppressHydrationWarning className="mb-2 text-gray-700">
-                                                    <span className="text-gray-400 mr-2">[{log.time}]</span>
-                                                    {log.text.startsWith('>') ? <span className="text-black font-bold">{log.text}</span> : log.text}
-                                                </div>
-                                            ))}
+                                            {simLogs.map((log, i) => {
+                                                const safeLogText = String(log?.text ?? '');
+                                                const isSystemHighlight = safeLogText.charAt(0) === '>';
+                                                return (
+                                                    <div key={i} suppressHydrationWarning className="mb-2 text-gray-700">
+                                                        <span className="text-gray-400 mr-2">[{String(log?.time ?? '--:--:--')}]</span>
+                                                        {isSystemHighlight ? <span className="text-black font-bold">{safeLogText}</span> : safeLogText}
+                                                    </div>
+                                                );
+                                            })}
                                             {simulationStep === 'running' && (
                                                 <div className="animate-pulse text-black">_</div>
                                             )}
@@ -709,3 +687,4 @@ export default function VeriAgentApp() {
         </section>
     );
 }
+
