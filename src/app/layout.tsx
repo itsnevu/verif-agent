@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from '@/components/ScrollToTop';
 import { Providers } from './providers';
+import AppErrorBoundary from '@/components/AppErrorBoundary';
 import '@rainbow-me/rainbowkit/styles.css';
 
 
@@ -43,10 +44,18 @@ export default function RootLayout({
         className="antialiased"
       >
         <Providers>
-          <Navbar />
-          {children}
-          <Footer />
-          <ScrollToTop />
+          <AppErrorBoundary fallbackTitle="Navbar Runtime Error">
+            <Navbar />
+          </AppErrorBoundary>
+          <AppErrorBoundary fallbackTitle="Page Runtime Error">
+            {children}
+          </AppErrorBoundary>
+          <AppErrorBoundary fallbackTitle="Footer Runtime Error">
+            <Footer />
+          </AppErrorBoundary>
+          <AppErrorBoundary fallbackTitle="UI Runtime Error">
+            <ScrollToTop />
+          </AppErrorBoundary>
         </Providers>
       </body>
     </html>

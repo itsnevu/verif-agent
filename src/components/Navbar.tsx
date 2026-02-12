@@ -208,8 +208,9 @@ export default function Navbar() {
                       <button
                         onClick={() => {
                           setMobileMenuOpen(false);
-                          openConnectModal();
+                          openConnectModal?.();
                         }}
+                        disabled={!openConnectModal}
                         className="w-full px-6 py-3 bg-primary rounded-lg text-sm font-semibold text-white flex items-center justify-center gap-2"
                       >
                         <Wallet className="w-4 h-4" />
@@ -223,8 +224,9 @@ export default function Navbar() {
                       <button
                         onClick={() => {
                           setMobileMenuOpen(false);
-                          openChainModal();
+                          openChainModal?.();
                         }}
+                        disabled={!openChainModal}
                         className="w-full px-6 py-3 bg-red-500 rounded-lg text-sm font-semibold text-white"
                       >
                         Wrong network
@@ -236,8 +238,9 @@ export default function Navbar() {
                     <button
                       onClick={() => {
                         setMobileMenuOpen(false);
-                        openAccountModal();
+                        openAccountModal?.();
                       }}
+                      disabled={!openAccountModal}
                       className="w-full px-6 py-3 bg-gray-800 border border-white/10 rounded-lg text-sm font-semibold text-white flex items-center justify-center gap-2"
                     >
                       {account.displayName}

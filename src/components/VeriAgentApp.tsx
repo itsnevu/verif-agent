@@ -84,6 +84,7 @@ export default function VeriAgentApp() {
     const [nodeLogs, setNodeLogs] = useState<string[]>([]);
     const [totalProofs, setTotalProofs] = useState(1248932);
     const nodeLogContainerRef = useRef<HTMLDivElement>(null);
+    const [runtimeNotice, setRuntimeNotice] = useState<string | null>(null);
 
     const getErrorMessage = (error: unknown): string => {
         if (typeof error === 'string') return error;
@@ -92,6 +93,23 @@ export default function VeriAgentApp() {
             if (typeof message === 'string') return message;
         }
         return 'Unknown transaction error';
+    };
+
+    const reportRuntimeError = (context: string, error: unknown) => {
+        const message = getErrorMessage(error);
+        console.error(`${context} failed:`, error);
+        setRuntimeNotice(`${context} failed: ${message}`);
+    };
+
+    const safeExecute = (context: string, fn: () => void | Promise<void>) => {
+        try {
+            const result = fn();
+            if (result && typeof (result as Promise<void>).then === 'function') {
+                (result as Promise<void>).catch((error: unknown) => reportRuntimeError(context, error));
+            }
+        } catch (error: unknown) {
+            reportRuntimeError(context, error);
+        }
     };
 
     // Setup mounted state to prevent hydration errors
@@ -137,13 +155,18 @@ export default function VeriAgentApp() {
 
         let i = 0;
         const interval = setInterval(() => {
-            if (i < logs.length) {
-                const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                setDeployLogs(prev => [...prev, { time, text: logs[i] }]);
-                i++;
-            } else {
+            try {
+                if (i < logs.length) {
+                    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+                    setDeployLogs(prev => [...prev, { time, text: logs[i] }]);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    setDeployStep('deployed');
+                }
+            } catch (error: unknown) {
                 clearInterval(interval);
-                setDeployStep('deployed');
+                reportRuntimeError('deploy-sequence', error);
             }
         }, 800);
     };
@@ -210,16 +233,22 @@ export default function VeriAgentApp() {
 
         let i = 0;
         simulationIntervalRef.current = setInterval(() => {
-            if (i < steps.length) {
-                const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                setSimLogs(prev => [...prev, { time, text: steps[i] }]);
-                i++;
-                if (simLogContainerRef.current) {
-                    simLogContainerRef.current.scrollTop = simLogContainerRef.current.scrollHeight;
+            try {
+                if (i < steps.length) {
+                    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+                    setSimLogs(prev => [...prev, { time, text: steps[i] }]);
+                    i++;
+                    if (simLogContainerRef.current) {
+                        simLogContainerRef.current.scrollTop = simLogContainerRef.current.scrollHeight;
+                    }
+                } else {
+                    if (simulationIntervalRef.current) clearInterval(simulationIntervalRef.current);
+                    setSimulationStep('verified');
                 }
-            } else {
+            } catch (error: unknown) {
                 if (simulationIntervalRef.current) clearInterval(simulationIntervalRef.current);
-                setSimulationStep('verified');
+                reportRuntimeError('live-inference', error);
+                setSimulationStep('idle');
             }
         }, 500);
     };
@@ -227,17 +256,21 @@ export default function VeriAgentApp() {
     // Node Live Feed Logic
     useEffect(() => {
         const interval = setInterval(() => {
-            const template = NODE_LOG_TEMPLATES[Math.floor(Math.random() * NODE_LOG_TEMPLATES.length)];
-            const log = template
-                .replace("{block}", Math.floor(18239000 + Math.random() * 1000).toString())
-                .replace("{agent}", `AG-${Math.floor(Math.random() * 9000) + 1000}`)
-                .replace("{gas}", Math.floor(Math.random() * 50000 + 21000).toString())
-                .replace("{task}", Math.floor(Math.random() * 9000).toString())
-                .replace("{ip}", `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`);
+            try {
+                const template = NODE_LOG_TEMPLATES[Math.floor(Math.random() * NODE_LOG_TEMPLATES.length)];
+                const log = template
+                    .replace("{block}", Math.floor(18239000 + Math.random() * 1000).toString())
+                    .replace("{agent}", `AG-${Math.floor(Math.random() * 9000) + 1000}`)
+                    .replace("{gas}", Math.floor(Math.random() * 50000 + 21000).toString())
+                    .replace("{task}", Math.floor(Math.random() * 9000).toString())
+                    .replace("{ip}", `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`);
 
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-            setNodeLogs(prev => [`[${time}] ${log}`, ...prev].slice(0, 50));
-            if (Math.random() > 0.5) setTotalProofs(prev => prev + 1);
+                const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+                setNodeLogs(prev => [`[${time}] ${log}`, ...prev].slice(0, 50));
+                if (Math.random() > 0.5) setTotalProofs(prev => prev + 1);
+            } catch (error: unknown) {
+                reportRuntimeError('node-live-feed', error);
+            }
         }, 1500);
         return () => clearInterval(interval);
     }, []);
@@ -280,6 +313,17 @@ export default function VeriAgentApp() {
                         ))}
                     </div>
                 </div>
+                {runtimeNotice && (
+                    <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 flex items-center justify-between gap-3">
+                        <span className="truncate">{runtimeNotice}</span>
+                        <button
+                            onClick={() => setRuntimeNotice(null)}
+                            className="px-2 py-1 text-xs rounded bg-red-600 text-white hover:bg-red-700"
+                        >
+                            Dismiss
+                        </button>
+                    </div>
+                )}
 
                 <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden min-h-[700px] shadow-2xl relative">
                     <AnimatePresence mode="wait">
@@ -310,7 +354,7 @@ export default function VeriAgentApp() {
                                                     <ConnectButton.Custom>
                                                         {({ openConnectModal }) => (
                                                             <button
-                                                                onClick={() => openConnectModal?.()}
+                                                                onClick={() => safeExecute('wallet-connect', () => openConnectModal?.())}
                                                                 disabled={!openConnectModal}
                                                                 className="px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-all shadow-lg shadow-black/10 flex items-center gap-2 text-sm"
                                                             >
@@ -363,7 +407,7 @@ export default function VeriAgentApp() {
                                                 </div>
 
                                                 <button
-                                                    onClick={handleDeploy}
+                                                    onClick={() => safeExecute('deploy-agent', handleDeploy)}
                                                     disabled={deployStep !== 'idle'}
                                                     className={`w-full py-4 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] ${deployStep !== 'idle' ? 'bg-gray-800 cursor-not-allowed shadow-none opacity-80' : 'bg-black hover:bg-gray-900 hover:shadow-2xl shadow-black/20'}`}
                                                 >
@@ -473,7 +517,7 @@ export default function VeriAgentApp() {
                                                                 </p>
                                                             </div>
                                                             <button
-                                                                onClick={handlePayment}
+                                                                onClick={() => safeExecute('agent-activation-payment', handlePayment)}
                                                                 disabled={isTxPending}
                                                                 className={`w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 ${isTxPending ? 'bg-gray-700 text-gray-300 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500 text-white shadow-green-900/20'}`}
                                                             >
@@ -542,7 +586,7 @@ export default function VeriAgentApp() {
                                         </div>
 
                                         <button
-                                            onClick={runSimulation}
+                                            onClick={() => safeExecute('live-inference', runSimulation)}
                                             disabled={simulationStep === 'running'}
                                             className={`w-full py-4 rounded-xl font-bold text-white transition-all flex items-center justify-center gap-2 mt-8 ${simulationStep === 'running' ? 'bg-gray-400 cursor-not-allowed opacity-50' : 'bg-black hover:bg-gray-800 hover:shadow-lg'}`}
                                         >

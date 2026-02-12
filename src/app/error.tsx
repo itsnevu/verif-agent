@@ -28,6 +28,7 @@ export default function Error({
 
                 <h1 className="text-5xl font-bold text-black mb-4 tracking-tight">Consensus Failure</h1>
                 <p className="text-red-500 mb-2 font-mono text-sm">Error Digest: {error.digest || 'UNKNOWN_HASH_COLLISION'}</p>
+                <p className="text-red-400 mb-4 font-mono text-xs break-words">{error.message || 'No runtime error message available.'}</p>
                 <p className="text-gray-600 mb-10 leading-relaxed">
                     The protocol encountered a critical runtime error. State synchronization failed.
                     Please try re-broadcasting your request.
