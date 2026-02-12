@@ -23,7 +23,7 @@ const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
     appName: '0xVRE',
-    projectId: 'YOUR_PROJECT_ID', // Note: User will need to replace this eventually, but it works without for testing often or with public IDs
+    projectId: 'YOUR_PROJECT_ID',
     wallets: [
         ...wallets,
         {
@@ -38,9 +38,9 @@ const config = getDefaultConfig({
     ssr: true,
 });
 
-const queryClient = new QueryClient();
-
 export function Providers({ children }: { children: React.ReactNode }) {
+    const [queryClient] = React.useState(() => new QueryClient());
+
     return (
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
