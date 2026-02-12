@@ -376,16 +376,16 @@ export default function VeriAgentApp() {
                                                     </div>
                                                 </div>
 
-                                                <div className="bg-yellow-50/50 border border-yellow-200/60 rounded-xl p-4 relative overflow-hidden">
+                                                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 relative overflow-hidden">
                                                     <div className="absolute top-0 right-0 p-4 opacity-10 blur-sm pointer-events-none">
-                                                        <AlertCircle className="w-16 h-16 text-yellow-600" />
+                                                        <AlertCircle className="w-16 h-16 text-gray-600" />
                                                     </div>
                                                     <div className="flex items-start gap-3 relative z-10">
-                                                        <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                                                        <AlertCircle className="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" />
                                                         <div className="space-y-1">
-                                                            <div className="text-xs font-bold text-yellow-800 uppercase tracking-wide">Network Requirement</div>
-                                                            <p className="text-xs text-yellow-700 leading-relaxed">
-                                                                Deployment is free. Activation requires <span className="font-mono font-bold bg-yellow-100 px-1 rounded">10 USDC</span>.
+                                                            <div className="text-xs font-bold text-gray-800 uppercase tracking-wide">Network Requirement</div>
+                                                            <p className="text-xs text-gray-700 leading-relaxed">
+                                                                Deployment is free. Activation requires <span className="font-mono font-bold bg-gray-200 text-gray-900 px-1 rounded">10 USDC</span>.
                                                             </p>
                                                         </div>
                                                     </div>
@@ -416,9 +416,9 @@ export default function VeriAgentApp() {
                                         {/* Terminal Header */}
                                         <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-800/50">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-3 h-3 rounded-full bg-[#FF5F56] hover:bg-[#FF5F56]/80 transition-colors shadow-sm" />
-                                                <div className="w-3 h-3 rounded-full bg-[#FFBD2E] hover:bg-[#FFBD2E]/80 transition-colors shadow-sm" />
-                                                <div className="w-3 h-3 rounded-full bg-[#27C93F] hover:bg-[#27C93F]/80 transition-colors shadow-sm" />
+                                                <div className="w-3 h-3 rounded-full bg-gray-500 hover:bg-gray-400 transition-colors shadow-sm" />
+                                                <div className="w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors shadow-sm" />
+                                                <div className="w-3 h-3 rounded-full bg-gray-400 hover:bg-gray-300 transition-colors shadow-sm" />
                                             </div>
                                             <div className="text-[10px] uppercase tracking-widest text-gray-600 font-semibold flex items-center gap-2">
                                                 <Terminal className="w-3 h-3" /> x402-CLI v2.4.0
@@ -426,7 +426,7 @@ export default function VeriAgentApp() {
                                         </div>
 
                                         {/* Terminal Body */}
-                                        <div ref={deployLogRef} className="flex-1 space-y-3 overflow-y-auto custom-scrollbar min-h-[300px] font-mono text-xs leading-relaxed pb-5 pr-1">
+                                        <div ref={deployLogRef} className="flex-1 space-y-3 overflow-y-auto overflow-x-hidden custom-scrollbar min-h-[300px] font-mono text-xs leading-relaxed pb-5 pr-1">
                                             {deployLogs.length === 0 && (
                                                 <div className="h-full flex flex-col items-center justify-center text-gray-700 space-y-4 opacity-50">
                                                     <div className="w-12 h-12 border border-dashed border-gray-700 rounded-lg flex items-center justify-center">
@@ -439,7 +439,7 @@ export default function VeriAgentApp() {
                                             {deployLogs.map((log, i) => {
                                                 const safeLogText = String(log?.text ?? '');
                                                 return (
-                                                <div key={i} suppressHydrationWarning className={`flex items-start gap-3 ${safeLogText.includes('✅') ? 'text-green-400 font-bold bg-green-900/10 p-2 rounded -mx-2 border border-green-900/20' : safeLogText.includes('❌') ? 'text-red-400 font-bold bg-red-900/10 p-2 rounded -mx-2 border border-red-900/20' : 'text-gray-400'}`}>
+                                                <div key={i} suppressHydrationWarning className={`flex items-start gap-3 ${safeLogText.includes('✅') ? 'text-gray-100 font-bold bg-gray-800/70 p-2 rounded border border-gray-700' : safeLogText.includes('❌') ? 'text-gray-300 font-bold bg-gray-900 p-2 rounded border border-gray-800' : 'text-gray-400'}`}>
                                                     <span className="text-gray-600 select-none mt-0.5 text-[10px] whitespace-nowrap">[{log.time}]</span>
                                                     <span className="text-gray-700 select-none mt-0.5">$</span>
                                                     <span>{safeLogText}</span>
@@ -454,10 +454,10 @@ export default function VeriAgentApp() {
                                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                                     className="mt-8 bg-gradient-to-br from-[#1A1A1C] to-[#111] rounded-xl p-6 border border-gray-800 shadow-2xl relative overflow-hidden group"
                                                 >
-                                                    <div className="absolute top-0 right-0 p-12 bg-green-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-green-500/20 transition-all duration-700" />
+                                                    <div className="absolute top-0 right-0 p-12 bg-gray-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-gray-500/20 transition-all duration-700" />
 
                                                     <div className="flex items-center gap-3 mb-6">
-                                                        <div className={`p-2 rounded-lg border flex items-center justify-center transition-colors ${deployStep === 'activated' ? 'bg-green-500/20 border-green-500/30 text-green-400' : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500'}`}>
+                                                        <div className={`p-2 rounded-lg border flex items-center justify-center transition-colors ${deployStep === 'activated' ? 'bg-gray-500/20 border-gray-300 text-gray-100' : 'bg-gray-800 border-gray-700 text-gray-300'}`}>
                                                             {deployStep === 'activated' ? <BadgeCheck className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                                                         </div>
                                                         <div>
@@ -473,7 +473,7 @@ export default function VeriAgentApp() {
                                                         </div>
                                                         <div className="bg-black/40 rounded-lg p-3 border border-gray-800/50 flex items-center justify-between group/code hover:border-gray-700 transition-colors cursor-pointer">
                                                             <div className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Verify Code</div>
-                                                            <div className="font-mono text-xs text-green-400 tracking-widest">{generatedCodes.verify}</div>
+                                                            <div className="font-mono text-xs text-gray-100 tracking-widest">{generatedCodes.verify}</div>
                                                         </div>
                                                     </div>
 
@@ -483,7 +483,7 @@ export default function VeriAgentApp() {
                                                                 href={tweetUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="block w-full text-center py-3.5 bg-[#1DA1F2] hover:bg-[#1a91da] text-white font-bold rounded-lg transition-all text-xs uppercase tracking-wide shadow-lg shadow-[#1DA1F2]/20 hover:shadow-[#1DA1F2]/40 transform hover:-translate-y-0.5 active:translate-y-0"
+                                                                className="block w-full text-center py-3.5 bg-white hover:bg-gray-200 text-black font-bold rounded-lg transition-all text-xs uppercase tracking-wide shadow-lg shadow-black/10 hover:shadow-black/20 transform hover:-translate-y-0.5 active:translate-y-0"
                                                             >
                                                                 1. Tweet to Claim Ownership
                                                             </a>
@@ -499,16 +499,16 @@ export default function VeriAgentApp() {
                                                     {/* Step 2: Payment Button */}
                                                     {deployStep === 'payment_pending' && (
                                                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                                            <div className="mb-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
-                                                                <p className="text-yellow-200 text-xs flex items-center gap-2">
+                                                            <div className="mb-4 bg-gray-800 border border-gray-700 rounded-lg p-3">
+                                                                <p className="text-gray-200 text-xs flex items-center gap-2">
                                                                     <Zap className="w-3 h-3 fill-current" /> Final Step: Activate Enclave
                                                                 </p>
                                                             </div>
                                                             <button
                                                                 onClick={() => safeExecute('agent-activation-payment', handlePayment)}
-                                                                className="w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white shadow-green-900/20"
+                                                                className="w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black shadow-black/20"
                                                             >
-                                                                <>Pay 10 USDC to Activate Agent <span className="text-[10px] bg-black/20 px-2 py-0.5 rounded ml-1">USDC</span></>
+                                                                <>Pay 10 USDC to Activate Agent <span className="text-[10px] bg-gray-300 text-gray-900 px-2 py-0.5 rounded ml-1">USDC</span></>
                                                             </button>
                                                             <button onClick={() => setDeployStep('deployed')} className="w-full mt-2 text-[10px] text-gray-500 hover:text-gray-300">
                                                                 ← Back
@@ -519,7 +519,7 @@ export default function VeriAgentApp() {
                                                     {/* Step 3: Activated */}
                                                     {deployStep === 'activated' && (
                                                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2 text-center">
-                                                            <div className="inline-flex items-center gap-2 bg-green-500 text-black px-4 py-2 rounded-full font-bold text-sm mb-2 shadow-lg shadow-green-500/20">
+                                                            <div className="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-bold text-sm mb-2 shadow-lg shadow-black/20">
                                                                 <CheckCircle className="w-4 h-4 fill-current" /> AGENT ACTIVATED
                                                             </div>
                                                             <p className="text-gray-500 text-xs">Your agent is now live on x402 Network.</p>
@@ -586,7 +586,7 @@ export default function VeriAgentApp() {
 
                                         <div
                                             ref={simLogContainerRef}
-                                            className="flex-1 bg-white rounded-xl border border-gray-200 p-4 font-mono text-xs overflow-y-auto custom-scrollbar relative z-10 shadow-inner"
+                                            className="flex-1 bg-white rounded-xl border border-gray-200 p-4 font-mono text-xs overflow-y-auto overflow-x-hidden custom-scrollbar relative z-10 shadow-inner"
                                         >
                                             {simLogs.length === 0 && simulationStep === 'idle' && (
                                                 <div className="h-full flex items-center justify-center text-gray-400">
@@ -673,7 +673,7 @@ export default function VeriAgentApp() {
                                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                     <span className="text-green-800 font-mono text-xs">Node Connection Stable: {totalProofs.toLocaleString()} proofs verified</span>
                                 </div>
-                                <div ref={nodeLogContainerRef} className="flex-1 font-mono text-xs overflow-y-auto custom-scrollbar space-y-1.5 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div ref={nodeLogContainerRef} className="flex-1 font-mono text-xs overflow-y-auto overflow-x-hidden custom-scrollbar space-y-1.5 p-4 bg-gray-50 rounded-xl border border-gray-200">
                                     {nodeLogs.map((log, i) => (
                                         <div key={i} suppressHydrationWarning className="text-gray-600">{log}</div>
                                     ))}
@@ -687,4 +687,6 @@ export default function VeriAgentApp() {
         </section>
     );
 }
+
+
 
