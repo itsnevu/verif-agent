@@ -31,8 +31,8 @@ const customMainnet = {
     ...mainnet,
     rpcUrls: {
         ...mainnet.rpcUrls,
-        default: { http: ['https://eth.llama.rpc.com'] },
-        public: { http: ['https://eth.llama.rpc.com'] },
+        default: { http: ['https://rpc.ankr.com/eth'] },
+        public: { http: ['https://rpc.ankr.com/eth'] },
     },
 } as const;
 
