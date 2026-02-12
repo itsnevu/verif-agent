@@ -82,7 +82,7 @@ export default function VeriAgentApp() {
     const [nodeLogs, setNodeLogs] = useState<string[]>([]);
     const [totalProofs, setTotalProofs] = useState(1248932);
     const nodeLogContainerRef = useRef<HTMLDivElement>(null);
-    const [runtimeNotice, setRuntimeNotice] = useState<string | null>(null);
+    const [paymentError, setPaymentError] = useState<string | null>(null);
 
     const getErrorMessage = (error: unknown): string => {
         if (typeof error === 'string') return error;
@@ -94,9 +94,7 @@ export default function VeriAgentApp() {
     };
 
     const reportRuntimeError = (context: string, error: unknown) => {
-        const message = getErrorMessage(error);
         console.error(`${context} failed:`, error);
-        setRuntimeNotice(`${context} failed: ${message}`);
     };
 
     const safeExecute = (context: string, fn: () => void | Promise<void>) => {
@@ -134,6 +132,7 @@ export default function VeriAgentApp() {
     // Deploy Logic
     const handleDeploy = () => {
         if (!isConnected) return;
+        setPaymentError(null);
         setDeployStep('deploying');
         setDeployLogs([]);
 
@@ -172,18 +171,17 @@ export default function VeriAgentApp() {
     const handlePayment = () => {
         try {
             const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-            const notice = 'Not enough balance: minimum 10 USDC is required for activation.';
-            setRuntimeNotice(notice);
+            setPaymentError('Not enough balance');
             setDeployLogs(prev => [
                 ...prev,
                 { time, text: 'Payment token selected: USDC' },
                 { time, text: 'Activation fee required: 10 USDC' },
-                { time, text: `? ${notice}` },
             ]);
         } catch (error: unknown) {
             console.error("Payment initiation failed:", error);
             const time = new Date().toLocaleTimeString('en-US', { hour12: false });
             const message = getErrorMessage(error);
+            setPaymentError('Payment failed');
             setDeployLogs(prev => [...prev, { time, text: `Payment Initiation Failed: ${message.slice(0, 80)}` }]);
         }
     };
@@ -298,18 +296,6 @@ export default function VeriAgentApp() {
                         ))}
                     </div>
                 </div>
-                {runtimeNotice && (
-                    <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 flex items-center justify-between gap-3">
-                        <span className="truncate">{runtimeNotice}</span>
-                        <button
-                            onClick={() => setRuntimeNotice(null)}
-                            className="px-2 py-1 text-xs rounded bg-red-600 text-white hover:bg-red-700"
-                        >
-                            Dismiss
-                        </button>
-                    </div>
-                )}
-
                 <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden min-h-[700px] shadow-2xl relative">
                     <AnimatePresence mode="wait">
 
@@ -488,7 +474,10 @@ export default function VeriAgentApp() {
                                                                 1. Tweet to Claim Ownership
                                                             </a>
                                                             <button
-                                                                onClick={() => setDeployStep('payment_pending')}
+                                                                onClick={() => {
+                                                                    setPaymentError(null);
+                                                                    setDeployStep('payment_pending');
+                                                                }}
                                                                 className="w-full py-2 border border-gray-700 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors text-xs"
                                                             >
                                                                 I&apos;ve posted the tweet -&gt; Continue
@@ -505,12 +494,22 @@ export default function VeriAgentApp() {
                                                                 </p>
                                                             </div>
                                                             <button
-                                                                onClick={() => safeExecute('agent-activation-payment', handlePayment)}
-                                                                className="w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black shadow-black/20"
+                                                                onClick={() => {
+                                                                    setPaymentError(null);
+                                                                    safeExecute('agent-activation-payment', handlePayment);
+                                                                }}
+                                                                className={`w-full py-4 font-bold rounded-lg transition-all text-sm shadow-lg flex items-center justify-center gap-2 ${paymentError ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-white hover:bg-gray-200 text-black shadow-black/20'}`}
                                                             >
-                                                                <>Pay 10 USDC to Activate Agent <span className="text-[10px] bg-gray-300 text-gray-900 px-2 py-0.5 rounded ml-1">USDC</span></>
+                                                                {paymentError ? (
+                                                                    <>{paymentError}</>
+                                                                ) : (
+                                                                    <>Pay 10 USDC to Activate Agent <span className="text-[10px] bg-gray-300 text-gray-900 px-2 py-0.5 rounded ml-1">USDC</span></>
+                                                                )}
                                                             </button>
-                                                            <button onClick={() => setDeployStep('deployed')} className="w-full mt-2 text-[10px] text-gray-500 hover:text-gray-300">
+                                                            <button onClick={() => {
+                                                                setPaymentError(null);
+                                                                setDeployStep('deployed');
+                                                            }} className="w-full mt-2 text-[10px] text-gray-500 hover:text-gray-300">
                                                                 ← Back
                                                             </button>
                                                         </motion.div>
