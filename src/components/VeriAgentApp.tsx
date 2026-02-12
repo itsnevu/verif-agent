@@ -83,6 +83,7 @@ export default function VeriAgentApp() {
     const [totalProofs, setTotalProofs] = useState(1248932);
     const nodeLogContainerRef = useRef<HTMLDivElement>(null);
     const [paymentError, setPaymentError] = useState<string | null>(null);
+    const [inferenceError, setInferenceError] = useState<string | null>(null);
 
     const getErrorMessage = (error: unknown): string => {
         if (typeof error === 'string') return error;
@@ -131,7 +132,11 @@ export default function VeriAgentApp() {
 
     // Deploy Logic
     const handleDeploy = () => {
-        if (!isConnected) return;
+        if (!isConnected) {
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            setDeployLogs(prev => [...prev, { time, text: "Please connect wallet first before deploying an agent." }]);
+            return;
+        }
         setPaymentError(null);
         setDeployStep('deploying');
         setDeployLogs([]);
@@ -170,6 +175,10 @@ export default function VeriAgentApp() {
 
     const handlePayment = () => {
         try {
+            if (!isConnected) {
+                setPaymentError('Please connect wallet first');
+                return;
+            }
             setPaymentError('Not enough balance');
         } catch (error: unknown) {
             console.error("Payment initiation failed:", error);
@@ -179,6 +188,13 @@ export default function VeriAgentApp() {
     // Simulator Logic (Free Trial)
     const runSimulation = () => {
         if (simulationStep === 'running') return;
+        if (!isConnected) {
+            setInferenceError('Please connect wallet first');
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            setSimLogs(prev => [...prev, { time, text: "Please connect wallet first before executing a free request." }]);
+            return;
+        }
+        setInferenceError(null);
         setSimulationStep('running');
         setSimLogs([]);
 
@@ -261,7 +277,7 @@ export default function VeriAgentApp() {
         return 0;
     });
 
-    const tweetText = `I'm claiming my AI agent "${agentName}" after @mooltbook for @0xvre\n\nVerification: ${generatedCodes.verify}\n${address}`;
+    const tweetText = `I'm claiming my AI agent "${agentName}" @mooltbook for @0xvre\n\nVerification: ${generatedCodes.verify}\n${address}`;
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
     // Prevent hydration mismatch
@@ -466,6 +482,10 @@ export default function VeriAgentApp() {
                                                             </a>
                                                             <button
                                                                 onClick={() => {
+                                                                    if (!isConnected) {
+                                                                        setPaymentError('Please connect wallet first');
+                                                                        return;
+                                                                    }
                                                                     setPaymentError(null);
                                                                     setDeployStep('payment_pending');
                                                                 }}
@@ -559,13 +579,27 @@ export default function VeriAgentApp() {
                                             </div>
                                         </div>
 
-                                        <button
-                                            onClick={() => safeExecute('live-inference', runSimulation)}
-                                            disabled={simulationStep === 'running'}
-                                            className={`w-full py-4 rounded-xl font-bold text-white transition-all flex items-center justify-center gap-2 mt-8 ${simulationStep === 'running' ? 'bg-gray-400 cursor-not-allowed opacity-50' : 'bg-black hover:bg-gray-800 hover:shadow-lg'}`}
-                                        >
-                                            {simulationStep === 'running' ? <><RefreshCw className="w-4 h-4 animate-spin" /> PROCESSING...</> : <><Play className="w-4 h-4 fill-current" /> EXECUTE FREE REQUEST</>}
-                                        </button>
+                                        {inferenceError && (
+                                            <p className="mt-4 text-xs text-red-600">{inferenceError}</p>
+                                        )}
+                                        <ConnectButton.Custom>
+                                            {({ openConnectModal }) => (
+                                                <button
+                                                    onClick={() => {
+                                                        if (!isConnected) {
+                                                            setInferenceError('Please connect wallet first');
+                                                            safeExecute('wallet-connect-inference', () => openConnectModal?.());
+                                                            return;
+                                                        }
+                                                        safeExecute('live-inference', runSimulation);
+                                                    }}
+                                                    disabled={simulationStep === 'running' || (!isConnected && !openConnectModal)}
+                                                    className={`w-full py-4 rounded-xl font-bold text-white transition-all flex items-center justify-center gap-2 mt-8 ${simulationStep === 'running' || (!isConnected && !openConnectModal) ? 'bg-gray-400 cursor-not-allowed opacity-50' : 'bg-black hover:bg-gray-800 hover:shadow-lg'}`}
+                                                >
+                                                    {simulationStep === 'running' ? <><RefreshCw className="w-4 h-4 animate-spin" /> PROCESSING...</> : !isConnected ? <><Wallet className="w-4 h-4" /> CONNECT WALLET TO EXECUTE</> : <><Play className="w-4 h-4 fill-current" /> EXECUTE FREE REQUEST</>}
+                                                </button>
+                                            )}
+                                        </ConnectButton.Custom>
                                     </div>
 
                                     <div className="p-8 bg-gray-50 relative overflow-hidden flex flex-col">
