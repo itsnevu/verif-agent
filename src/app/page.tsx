@@ -1,22 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import ProblemStatement from '@/components/ProblemStatement';
 import Solution from '@/components/Solution';
 import FAQ from '@/components/FAQ';
 import AppErrorBoundary from '@/components/AppErrorBoundary';
+import VeriAgentApp from '@/components/VeriAgentApp';
 
-
-// Lazy load heavy component
-const VeriAgentApp = dynamic(() => import('@/components/VeriAgentApp'), {
-  loading: () => (
-    <div className="py-24 flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
-    </div>
-  ),
-});
 
 export default function Home() {
   useEffect(() => {

@@ -9,10 +9,11 @@ type Props = {
 
 type State = {
     hasError: boolean;
+    message?: string;
 };
 
 export default class AppErrorBoundary extends React.Component<Props, State> {
-    state: State = { hasError: false };
+    state: State = { hasError: false, message: undefined };
 
     static getDerivedStateFromError(): State {
         return { hasError: true };
@@ -20,10 +21,17 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
 
     componentDidCatch(error: unknown) {
         console.error('AppErrorBoundary caught:', error);
+        const message =
+            typeof error === 'string'
+                ? error
+                : error && typeof error === 'object' && 'message' in error
+                    ? String((error as { message?: unknown }).message ?? 'Unknown runtime error')
+                    : 'Unknown runtime error';
+        this.setState({ message });
     }
 
     handleReset = () => {
-        this.setState({ hasError: false });
+        this.setState({ hasError: false, message: undefined });
     };
 
     render() {
@@ -33,6 +41,7 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
                     <div className="max-w-xl mx-auto rounded-2xl border border-red-200 bg-red-50 p-6 text-center">
                         <h3 className="text-xl font-bold text-red-700 mb-2">{this.props.fallbackTitle || 'Module Error'}</h3>
                         <p className="text-sm text-red-600 mb-4">A runtime error occurred in this section. Please retry.</p>
+                        {this.state.message && <p className="text-xs text-red-500 mb-4 break-words">{this.state.message}</p>}
                         <button
                             onClick={this.handleReset}
                             className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700"
